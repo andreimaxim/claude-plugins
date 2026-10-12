@@ -60,3 +60,7 @@ To try local edits, add the checkout as a marketplace and install from it. Claud
 claude plugin marketplace add ./
 claude plugin install maintain-rails@andreimaxim
 ```
+
+## License
+
+[MIT](LICENSE)
