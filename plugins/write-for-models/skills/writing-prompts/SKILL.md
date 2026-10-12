@@ -17,8 +17,8 @@ The goal is behavior, not prose. A good instruction reliably produces the intend
 the whole range of situations it covers, using only the text needed to achieve that result.
 Prioritize clarity for the model over other writing choices.
 
-The `writing-for-readers` skill covers prose composition and revision. Apply its guidance
-without changing the intended behavior, scope, or instruction strength.
+When the `plain-writing` skill is available, apply it to the prose without changing the
+intended behavior, scope, or instruction strength.
 
 ## Principles
 
