@@ -6,7 +6,7 @@ description: >-
   drafting or revising documents, Notion pages, reports, summaries, READMEs,
   emails, slides, commit messages, or PR descriptions, or when the user asks
   to simplify, clean up, tighten, reword, or make writing clearer. Use when
-  the user invokes /plain-writing deslopify or asks to deslopify an agent
+  the user invokes /write-for-people:plain-writing deslopify or asks to deslopify an agent
   response. Do not apply to code, only to the words around it.
 license: MIT
 ---
@@ -263,7 +263,7 @@ after. After the rules comes the deslopify command.
 
 ## The deslopify command
 
-When the user says `/plain-writing deslopify`, rewrite the previous agent
+When the user says `/write-for-people:plain-writing deslopify`, rewrite the previous agent
 response, or the text after the command, for a sharp CEO or technical reader
 who has no project context. Return only the rewrite.
 
