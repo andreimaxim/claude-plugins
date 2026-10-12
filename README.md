@@ -1,6 +1,6 @@
 # claude-plugins
 
-The plugins here add skills and subagents that help software engineers with their work in Claude Code, e.g., planning gem upgrades in a Rails application, planning and building features, and writing text for people or for models. You can install each plugin on its own, so you only add the skills you need.
+The plugins here add skills and subagents that help software engineers with their work in Claude Code, e.g., planning and building features, explaining code, and writing text for people or for models. You can install each plugin on its own, so you only add the skills you need.
 
 ## Install
 
@@ -24,22 +24,11 @@ claude plugin update plan-and-build@andreimaxim
 
 | Plugin | Description |
 | :- | :- |
-| [`maintain-rails`](plugins/maintain-rails) | Maintenance workflows for Ruby on Rails applications |
 | [`plan-and-build`](plugins/plan-and-build) | Shape work into bounded plans and implement them with independent review |
 | [`write-for-people`](plugins/write-for-people) | Explain code, choose names, and write plain prose for people to read |
 | [`write-for-models`](plugins/write-for-models) | Write and revise skills, system prompts, and other model instructions |
 
 Claude loads a plugin's skills on its own when a request matches the skill's description, so you can describe the task in your own words. You can also invoke a skill directly as `/<plugin>:<skill>`.
-
-### maintain-rails
-
-- **`/maintain-rails:upgrade-gem <gem> to <version>`** returns an application-specific upgrade plan. Claude finds the installed version, resolves the target to an exact release, and delegates to `gem-upgrade-planner`. It does not implement the upgrade.
-
-  ```text
-  /maintain-rails:upgrade-gem rails to 8.1
-  ```
-
-- **`maintain-rails:gem-upgrade-planner`** is the subagent that writes the plan. It investigates without modifying your application or shared data such as databases, and it does not implement the upgrade.
 
 ### plan-and-build
 

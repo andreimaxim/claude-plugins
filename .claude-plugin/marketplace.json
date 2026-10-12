@@ -7,11 +7,6 @@
   },
   "plugins": [
     {
-      "name": "maintain-rails",
-      "source": "./plugins/maintain-rails",
-      "description": "Maintenance workflows for Ruby on Rails applications"
-    },
-    {
       "name": "plan-and-build",
       "source": "./plugins/plan-and-build",
       "description": "Shape work into bounded plans and implement them with independent review"
