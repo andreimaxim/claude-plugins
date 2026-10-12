@@ -1,0 +1,12 @@
+{
+  "name": "write-for-people",
+  "version": "0.0.1",
+  "description": "Explain code, choose names, and write plain prose for people to read",
+  "author": {
+    "name": "Andrei Maxim",
+    "url": "https://github.com/andreimaxim"
+  },
+  "repository": "https://github.com/andreimaxim/claude-plugins",
+  "license": "MIT",
+  "keywords": ["explanation", "architecture", "naming", "terminology", "writing", "editing", "documentation"]
+}

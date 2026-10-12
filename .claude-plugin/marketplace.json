@@ -7,9 +7,19 @@
   },
   "plugins": [
     {
-      "name": "maintain-rails",
-      "source": "./plugins/maintain-rails",
-      "description": "Maintenance workflows for Ruby on Rails applications"
+      "name": "plan-and-build",
+      "source": "./plugins/plan-and-build",
+      "description": "Shape work into bounded plans and implement them with independent review"
+    },
+    {
+      "name": "write-for-people",
+      "source": "./plugins/write-for-people",
+      "description": "Explain code, choose names, and write plain prose for people to read"
+    },
+    {
+      "name": "write-for-models",
+      "source": "./plugins/write-for-models",
+      "description": "Write and revise skills, system prompts, and other model instructions"
     }
   ]
 }
