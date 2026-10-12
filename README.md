@@ -10,7 +10,7 @@ A [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-market
 
 ### maintain-rails
 
-- **`/maintain-rails:upgrade-gem <gem> to <version>`** upgrades one gem. Claude finds the installed version, resolves the requested version to an exact release, and asks the `gem-upgrade-planner` subagent for a plan specific to your application. Claude shows you the plan and waits for your approval before changing anything, then implements and verifies the approved changes.
+- **`/maintain-rails:upgrade-gem <gem> to <version>`** returns an application-specific upgrade plan. Claude finds the installed version, resolves the target to an exact release, and delegates to `gem-upgrade-planner`. It does not implement the upgrade.
 
   ```text
   /maintain-rails:upgrade-gem rails to 8.1
