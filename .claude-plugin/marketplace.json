@@ -1,0 +1,15 @@
+{
+  "name": "andreimaxim",
+  "description": "Claude Code plugins by Andrei Maxim",
+  "owner": {
+    "name": "Andrei Maxim",
+    "url": "https://github.com/andreimaxim"
+  },
+  "plugins": [
+    {
+      "name": "maintain-rails",
+      "source": "./plugins/maintain-rails",
+      "description": "Maintenance workflows for Ruby on Rails applications"
+    }
+  ]
+}
