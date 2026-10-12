@@ -13,7 +13,7 @@ claude plugin install plan-and-build@andreimaxim
 
 Inside a Claude Code session, use `/plugin marketplace add andreimaxim/claude-plugins` and `/plugin install plan-and-build@andreimaxim` instead.
 
-Plugins don't set a `version`, so Claude Code treats each commit as a new version. To update manually, then restart Claude Code:
+Each plugin sets a `version` in its `plugin.json`, and Claude Code installs a new copy of a plugin only when that version changes. To get a new version, update the marketplace and the plugin, and then restart Claude Code:
 
 ```bash
 claude plugin marketplace update andreimaxim
@@ -55,6 +55,8 @@ Validate after every change:
 ```bash
 claude plugin validate .
 ```
+
+When you change a plugin, raise the `version` in its `plugin.json`, because users don't get the change until the version changes.
 
 To try local edits, add the checkout as a marketplace and install from it. Claude Code then reads the plugin files in place, so edits apply at the next session start or after `/reload-plugins`:
 

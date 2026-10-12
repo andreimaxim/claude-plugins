@@ -1,5 +1,6 @@
 {
   "name": "plan-and-build",
+  "version": "0.0.1",
   "description": "Shape work into bounded plans and implement them with independent review",
   "author": {
     "name": "Andrei Maxim",

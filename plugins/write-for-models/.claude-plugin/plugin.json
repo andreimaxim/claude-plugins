@@ -1,5 +1,6 @@
 {
   "name": "write-for-models",
+  "version": "0.0.1",
   "description": "Write and revise skills, system prompts, and other model instructions",
   "author": {
     "name": "Andrei Maxim",
