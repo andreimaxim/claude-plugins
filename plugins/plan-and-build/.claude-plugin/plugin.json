@@ -1,0 +1,11 @@
+{
+  "name": "plan-and-build",
+  "description": "Shape work into bounded plans and implement them with independent review",
+  "author": {
+    "name": "Andrei Maxim",
+    "url": "https://github.com/andreimaxim"
+  },
+  "repository": "https://github.com/andreimaxim/claude-plugins",
+  "license": "MIT",
+  "keywords": ["planning", "shape-up", "implementation", "code-review", "research"]
+}
