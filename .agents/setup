@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Prepares an Amp orb to work on this marketplace: installs the Claude Code
+# CLI, which validates the marketplace and plugins (`claude plugin validate .`).
+set -euo pipefail
+
+curl -fsSL https://claude.ai/install.sh | bash
