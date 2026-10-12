@@ -4,7 +4,7 @@ The plan-and-build plugin helps Claude Code plan a change before building it, bu
 
 ## Skills
 
-- `shaping` turns a raw idea, such as a feature request or a hard bug report, into a bounded plan. You agree on the problem and how much change you're willing to take on, and the plan describes the main parts of the solution, the risks, and what is left out. The skill follows the shaping phase of [37signals' Shape Up](https://basecamp.com/shapeup/1.1-chapter-02), and its reference files retell two case studies from the book.
+- `shaping` turns a raw idea, such as a feature request or a hard bug report, into a bounded plan. You agree on the problem, the outcome, and how much change you're willing to take on. The plan then describes the main parts of the solution, the stories it has to support and the ones it must prevent, the risks, and what is left out. The skill follows the shaping phase of [37signals' Shape Up](https://basecamp.com/shapeup/1.1-chapter-02), and its reference files retell two case studies from the book.
 - `implementing` builds an agreed plan in small changes that each work end to end, and it checks each change as it goes. An independent reviewer has to review the finished result. If no reviewer is available, Claude reports the review as missing instead of reviewing its own work.
 - `organizing-commits` reorganizes a branch's committed and uncommitted changes into commits that are easy to review, and each commit has to build and pass the repository's checks on its own. It also loads when you ask Claude to restack a branch.
 
