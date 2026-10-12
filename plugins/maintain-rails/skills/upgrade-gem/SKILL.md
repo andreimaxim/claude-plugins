@@ -10,5 +10,6 @@ Identify the gem and requested version from the request or `$ARGUMENTS`. Ask if
 either is missing or unclear.
 
 Delegate to `maintain-rails:gem-upgrade-planner` with the gem and exact
-`currentVersion` and `requestedVersion`. Return its plan without implementing the
-upgrade or modifying the working application.
+`currentVersion` and `requestedVersion`. Return its plan, preserving concrete
+recommendations, applicability conditions, and evidence limitations. Do not
+implement the upgrade or modify the working application.
