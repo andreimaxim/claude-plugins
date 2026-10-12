@@ -5,116 +5,81 @@ description: Implements plans and agreed work through emergent scopes, architect
 
 # Implementing
 
-## Orienting and scoping
+Implementing turns an agreed plan into working, reviewed code, following the building phase of
+Shape Up. The work is built in scopes, which are small pieces that each work end to end, and the
+scopes come out of the work instead of a task list made up front.
 
-Start from the supplied plan or other agreed brief, whether it comes from `shaping`, another
-workflow, or the user. Establish the intended outcome, boundaries, constraints, and unresolved
-decisions from that agreement.
+## Orient
 
-Inspect enough of the existing system to choose a responsible first scope. Follow the
-relevant entry point to the code that owns the rules and produces observable effects. Use repository
-guidance, comparable flows, and behavior evidence to distinguish intended direction from incidental
-legacy behavior.
+Start from the plan or brief the user agreed to, and note the outcome, the stories, the boundaries,
+and any open decisions. Then follow the entry point to the code that owns the rules, and use the
+repository's guidance and similar flows to tell the intended design apart from accidental legacy
+behavior.
 
-Prefer a small, central end-to-end path that helps resolve a meaningful unknown. Before committing
-to the proposed approach, report evidence that could invalidate the plan. Check material assumptions
-against relevant code, contracts, or focused experiments before relying on them. If the problem or
-boundaries need reconsideration, use `shaping`.
+Check the plan's assumptions against the code, contracts, or a quick experiment, and report
+anything that could invalidate the plan before you build on it. If the problem itself needs
+rethinking, go back to `shaping`. When the plan depends on how a library, a framework, or another
+service behaves, ask the Librarian instead of inferring it from local code. Orienting isn't an
+audit or an approval step, so start building once you can choose a first scope.
 
-Draw scopes around independently integrable and verifiable outcomes, not layers, files, or people.
-Let boundaries and tasks emerge from real implementation. Split work into scopes when the outcomes
-or unknowns are independent. Combine fragments that produce nothing useful alone. Do not treat the
-initial map as an exhaustive task breakdown.
+## Choose scopes
 
-Track uncertainty: **unknown → understood → verified**. Understood means there is enough evidence
-to identify how to complete the remaining work. Verified means the integrated behavior works.
-New evidence can move work back to an earlier state. Activity, elapsed effort, and task counts
-are not substitutes for that distinction. Explicit state labels are optional.
+Start with a small path through the middle of the system that works end to end and resolves an
+important unknown. Use the plan's stories as starting points. A scope usually covers one story or a
+few related ones, and each anti-story should end up as a test.
 
-Keep the map only as detailed as needed to choose the next scope, prioritizing costly uncertainty
-and required behavior over polish. Share the relevant path, starting point, and uncertainties
-concisely. Report material changes rather than recreating the map after every routine edit.
+Draw each scope around an outcome you can integrate and verify on its own, not around layers,
+files, or people. Expect scopes to split, merge, and appear as you build, because the first map
+isn't a complete task list.
 
-This is not a repository audit, a complete architecture exercise, or a separate approval gate before
-authorized implementation.
+Track each scope as unknown, understood, or verified. Understood means you can see how to finish
+it, and verified means the integrated behavior works. New evidence can move a scope back, and
+effort spent doesn't count as progress. Tell the user when the map changes in a way that matters.
 
-## Implementing and steering
+## Build
 
-Complete the smallest end-to-end path that produces the selected scope's observable result within
-the agreed outcome. Let behavior and risk guide tests, not the proposed call graph. Build for current
-requirements rather than adding speculative generality. Use small, verified refactorings to extend
-the design as new requirements become concrete.
+Build the smallest end-to-end path that produces the scope's visible result, for today's
+requirements rather than imagined ones. For each behavior change, write a test or check that fails
+on the old behavior and passes on the new one, and run focused checks as you go. If the behavior is
+hard to test, look at the responsibility and dependency boundaries before you reach for elaborate
+mocks.
 
-Run focused checks throughout implementation to detect failures before later work depends on the
-change. For a behavior change, establish a test or executable check that distinguishes the required
-result from the old behavior. Treat difficulty setting up or observing that behavior as evidence to
-investigate responsibility and dependency boundaries, not as proof that the design is wrong.
-Investigate those boundaries before compensating with elaborate mocks or fixtures.
+As soon as the flow is concrete enough to judge, step back and look at the new code and its
+surroundings as one design, before you repeat that design across the rest of the work. Ask what
+callers and operators have to know or coordinate, and look for a simpler design through deletion,
+consolidation, and clearer ownership. You can change how the plan organizes the code, but not the
+agreed outcome.
 
-During implementation, as soon as the affected flow is concrete enough to judge, step back and
-examine the implementation and surrounding code as one system, before extending that design across
-the remaining work. Act as a software designer examining the composition as a whole. Consider what
-callers or operators must know, join, reconstruct, coordinate, and verify. Look for simplifications
-through deletion, consolidation, clearer ownership, and fewer competing representations. Challenge
-the proposed organization, not the agreed outcome.
+Refactor in small steps that keep behavior the same, with checks in place for the behavior you're
+preserving. Keep refactoring separate from behavior changes, and leave unrelated cleanup alone.
+Remove comments that only narrate the code, and keep the ones that explain a reason or a
+constraint.
 
-Refine unimplemented parts of the design directly. Improve the affected existing design in small,
-behavior-preserving steps throughout implementation. Before refactoring, identify the relevant
-observable behavior and contracts to preserve and establish checks for them. Run those checks
-between steps. Keep refactoring separate from intentional behavior changes so failures can be
-traced to one or the other. When bounded preparatory refactoring reduces the effort or risk of the
-next behavior change enough to justify its cost, complete and verify it just before that change.
-Leave unrelated or merely desirable cleanup outside the work.
+Bring any consequential departure from the plan to the developer before you make it. Pause only the
+affected work, and present the evidence with a recommendation. When something has to give, cut
+flexible breadth or generality first, and never cut required behavior, quality, security, or data
+integrity.
 
-Keep the patch easy to scan. Remove comments that merely narrate the code, but retain explanations
-of non-obvious rationale, constraints, and public contracts. Group closely related statements and
-separate distinct steps with blank lines, following the surrounding code's conventions. Use existing
-formatters and linters for mechanical style. Do not create enforcement rules for contextual
-readability choices.
+## Review and finish
 
-Adapt local structure within agreed behavior, ownership, contracts, and constraints. Repeated
-workarounds, type escapes, boundary leaks, or duplicated representations warrant investigation,
-but do not automatically require approval. Bring consequential departures from the agreement to
-the developer before implementing them. When a decision is needed, pause only the affected work
-and present the evidence and recommendation rather than forcing the implementation to fit the
-proposed design or silently redesigning it.
+Verify the integrated result with the repository's own checks. Then have the Oracle subagent review
+it in a fresh context. Give it the outcome, the stories, and the constraints, but not the
+implementation conversation, and ask it to check these things:
 
-Use implementation evidence to distinguish newly required work from optional polish, pre-existing
-problems, and excluded ideas. When work stalls, determine whether the scope's boundary is incoherent
-or a material question remains unresolved, and revise the scope map and next move accordingly.
-Reduce flexible breadth or generality before compromising required behavior, quality, security, or
-data integrity.
+- Correctness, and whether the change follows the repository's guidance.
+- Fit with the surrounding design, and any complexity the change doesn't need.
+- Whether the tests prove the required behavior.
 
-## Verification
+The review has to cover the complete integrated result before you report the work as ready, and
+your own review doesn't replace it. Weigh each finding instead of accepting it automatically, and
+carry the supported fixes through the code, the checks, and a follow-up review without waiting for
+the user to ask.
 
-Use the repository's relevant existing checks to verify the integrated result. Scale verification
-to the changed behavior and affected callers, and make the results and limitations available to
-the independent reviewer.
+Keep choosing scopes until the work meets the agreed outcome, unless the user asked you to stop
+after one. The work is ready when it meets the outcome, not when every possible improvement is
+done.
 
-Use an independent reviewer with strong reasoning and senior engineering judgment. When available,
-the Oracle subagent can fill this role. The reviewer challenges assumptions, traces consequences
-beyond the edited code, and assesses whether the implementation delivers the intended outcome.
-Give the reviewer the agreed outcome, required behavior, and constraints in a fresh context,
-without the implementation conversation. Have the reviewer inspect the actual changes and
-surrounding code. For an intermediate review, distinguish the scope being assessed from work
-still planned.
-
-Have the reviewer assess correctness, repository guidance, fit with the surrounding design,
-unnecessary complexity, and whether the tests and other evidence establish the required behavior.
-Obtain additional evidence where its findings expose a gap.
-
-A scope boundary need not trigger a separate review. Independent review must cover
-the complete integrated result before reporting readiness. If an independent reviewer is
-unavailable, report that requirement as unmet rather than substituting self-review.
-
-Assess its findings rather than accepting them mechanically. Carry supported, material corrections
-through implementation, verification, and focused follow-up review without waiting for the user to
-prompt each correction.
-
-Use the evidence, discoveries, and remaining uncertainty to choose the next scope. Completing a
-scope informs the next scope, but does not mean the whole task is complete. Continue toward the
-authorized outcome unless the user requested this scope alone or an explicit review stop. Judge
-readiness against that outcome, not an exhaustion of possible improvements.
-
-Report decisive verification evidence and any remaining limitation or blocker. Readiness does not
-authorize pushing, deployment, release, or production writes without explicit approval.
+When you report, go through the plan's stories. Say which ones work and how you verified them, mark
+each one as new, changed, or as before, and name the test for each anti-story. Then list any
+remaining limits or blockers. Being ready doesn't mean you can push, deploy, release, or write to
+production without explicit approval.

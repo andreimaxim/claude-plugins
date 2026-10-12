@@ -96,6 +96,9 @@ evidence. Then deal with each risk in one of these ways:
 - Settle a simpler answer now, even if it's less elegant.
 - Cut the risky part, and list it as a no-go.
 
+When the solution depends on how a library, a framework, or another service behaves, ask the
+Librarian instead of inferring it from local code.
+
 If a hard technical question remains, ask the Oracle subagent. Give it the solution, the appetite,
 the evidence, and the specific doubt, and ask whether the solution fits the appetite. Oracle gives
 advice, and we make the decision.
