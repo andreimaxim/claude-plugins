@@ -1,13 +1,41 @@
 ---
 name: upgrade-gem
-description: Upgrade a gem in a Ruby or Rails application to a requested version. Plans the upgrade with the gem-upgrade-planner subagent, waits for user approval, then implements and verifies the approved changes.
+description: Upgrades gems in Ruby or Rails applications when the user asks to update a dependency.
 argument-hint: <gem> to <version>
 ---
 
-Upgrade a gem in this application: $ARGUMENTS
+# Upgrading a gem
 
-1. Identify the gem and the requested version. Ask if either is missing or unclear.
-2. Find the installed version from the lockfile or Bundler. Resolve the requested version to an exact released version; for a partial version such as `8.1`, use the latest release in that series. If the application is already at or past that version, say so and stop.
-3. Delegate planning to the `maintain-rails:gem-upgrade-planner` subagent. Give it the gem, `currentVersion`, and `requestedVersion` (the exact version).
-4. Present the plan and wait for the user's approval. Do not change the application before then.
-5. Implement the approved changes, then run the plan's validation steps and report the results. If the work grows materially beyond the approved plan, stop and get approval for the expanded scope first.
+Upgrade the requested gem and make the application changes needed for compatibility.
+Use `$ARGUMENTS`, when supplied, to identify the gem and requested version.
+
+## Upgrade scope
+
+Ask if the gem or requested version is missing or unclear.
+
+Use `bundle info <gem>` to find the installed version. If the bundle is unavailable,
+read the version from `Gemfile.lock`.
+
+Use `gem list --remote --all --exact <gem>` to look up available releases. Resolve
+the requested version to an exact release. For a partial version such as `8.1`, use
+the latest release in that series.
+
+If the installed version is already at or beyond the target, report that and stop.
+
+Check whether the target satisfies the gem's version requirement in the Gemfile.
+If it does not, show the current requirement and the proposed replacement, and ask
+the user to explicitly approve that change before modifying the Gemfile.
+
+## Application-specific planning
+
+Delegate the application-specific upgrade plan to the
+`maintain-rails:gem-upgrade-planner` subagent. Provide the gem and the exact versions
+as `currentVersion` and `requestedVersion`.
+
+## Approval and validation
+
+Present the plan and wait for the user's approval before changing the application.
+Keep changes within the approved scope. Ask for approval again if the work expands
+materially beyond the plan.
+
+Run the plan's validation checks and report the results.
