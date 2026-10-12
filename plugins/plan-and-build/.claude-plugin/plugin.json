@@ -8,5 +8,5 @@
   },
   "repository": "https://github.com/andreimaxim/claude-plugins",
   "license": "MIT",
-  "keywords": ["planning", "shape-up", "implementation", "code-review", "research"]
+  "keywords": ["planning", "shape-up", "implementation", "code-review", "research", "git", "commits"]
 }
