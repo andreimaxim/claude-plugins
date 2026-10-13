@@ -1,6 +1,6 @@
 ---
 name: naming-things
-description: Chooses and evaluates names and terminology by clarifying meaning, behavior, and reader context. Use when naming or renaming variables, functions, types, fields, tables, endpoints, pages, products, or domain concepts, or when unclear, overloaded, or competing terms may conceal a modeling problem.
+description: Chooses, reviews, and fixes names by first working out what a thing means, what it does, and who will read the name. Use when the user asks what to call something, asks to rename or review names, or asks for a naming rule or convention, for variables, functions, types, fields, database columns, endpoints, pages, products, or domain concepts. Also use when a name found during other work seems unclear or is used with more than one meaning, because it may hide a modeling problem or a bug.
 ---
 
 # Naming things
