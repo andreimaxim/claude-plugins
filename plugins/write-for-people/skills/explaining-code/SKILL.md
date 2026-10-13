@@ -9,9 +9,6 @@ Explaining code helps the user understand how existing code works, why it was de
 what a change does. Lead with the answer in plain technical prose, and add a view such as a call
 tree or a diagram only when it makes the answer easier to follow.
 
-Inspired by HumanLayer's [show-me](https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md)
-skill and by the explaining-code skill in [Amp's official plugins](https://github.com/andreimaxim/amp-official-plugins/blob/main/skills/explaining-code/SKILL.md).
-
 ## Find out what the code does
 
 Read the relevant code before you explain it. Start from the entry point that best matches the
