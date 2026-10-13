@@ -1,61 +1,82 @@
 # Invoice Autopay
 
-Read this when working through a user flow. The example shows how a few places, affordances, and
-connections can expose behavioral questions without committing to screen layouts.
+Read this when you work through a user flow. The case shows how a few places, affordances, and
+connections can bring up questions about behavior before anyone draws a screen.
 
-## Start with a concrete entry point
+A breadboard describes an interface in words, without any visual design. It has three parts:
 
-An invoicing product is considering automatic payment of future invoices. A customer is looking
-at an unpaid invoice. One candidate puts a "Turn on Autopay" action there:
+- **Places** are things a person can go to, such as screens, dialogs, or menus.
+- **Affordances** are things a person can act on, such as buttons and fields. Text on the screen
+  counts too, because reading it tells the person what happened or what they can do next.
+- **Connections** show how an affordance takes the person from one place to another.
 
-1. **Invoice:** the customer chooses "Turn on Autopay."
-2. **Setup Autopay:** the customer sees the financial institution's identity, enters payment
-   details, and submits.
-3. **Confirmation:** the customer reads that setup succeeded.
+In the drawings below, each place is a name with a line under it, its affordances are listed under
+the line, and an arrow is a connection.
 
-Invoice, Setup Autopay, and Confirmation are places. The action, fields, institution identity, and
-confirmation message are affordances. Information counts: reading a message can tell someone what
-happened or what they can do next. The transitions between these places are connections.
+## Start from a concrete entry point
 
-Whether setup is a separate page or a dialog is still open. At this stage, the question is what
-connects to what, not how the interface is drawn.
+An invoicing product is considering a feature that pays a customer's future invoices
+automatically. The team started from a customer who is looking at an unpaid invoice, and one
+candidate puts a "Turn on Autopay" button there:
 
-## Let the flow reveal the missing decision
+```text
+Invoice                Setup Autopay            Confirmation
+───────                ─────────────            ────────────
+Turn on Autopay ─────▶ Card fields              Thank-you message
+                       Institution logo
+                       Submit ────────────────▶
+```
 
-Playing through that candidate raises a question: did turning on Autopay pay the current invoice,
-or only arrange payment of future invoices? The thank-you message cannot settle behavior that the
-flow has not defined.
+Whether Setup Autopay is a separate page or a dialog is still open, because the breadboard only
+shows what connects to what.
 
-One option adds a "Pay balance now" choice during setup. That introduces another decision and means
-confirmation must sometimes show a payment receipt and sometimes only confirm enrollment.
+## Let the flow show the missing decision
 
-The team tried a different entry point: make Autopay an option within the existing payment flow.
+Walking through the candidate raised a question the team hadn't thought of. Turning on Autopay
+might pay the current invoice, or it might only arrange payment of future invoices, and a thank-you
+message can't settle behavior the flow hasn't defined.
 
-1. **Invoice:** the customer chooses to pay it.
-2. **Pay Invoice:** the customer supplies payment details and can opt into Autopay for the future.
-3. **Confirmation:** the customer sees the payment receipt and, if chosen, confirmation of Autopay.
+One option added a "Pay balance now" choice to the setup screen. The option added another decision,
+and the confirmation screen would then have to show a receipt in some cases and only confirm the
+setup in others.
 
-Now the immediate payment is unambiguous. The existing payment form supported ACH and credit cards,
-so the team confirmed that Autopay could use either. That was a decision in this example, not a
-payment-method requirement for other products.
+The team tried a different entry point instead, and made Autopay an option in the existing payment
+flow:
 
-## Follow the interaction far enough to find its boundary
+```text
+Invoice        Pay Invoice                   Confirmation
+───────        ───────────                   ────────────
+Pay ─────────▶ Payment details               Receipt
+               Autopay future invoices?      Thank-you message
+               Submit ─────────────────────▶ Autopay confirmed, if chosen
+```
 
-Enrollment is not the whole experience. How would a customer disable Autopay later?
+In the new flow, the customer always pays the current invoice, so the question goes away. Sketching
+the flow also reminded the team that the existing payment form accepted ACH bank transfers as well
+as credit cards, and they confirmed that Autopay could use either one. The payment methods were a
+decision for this product, and other products may need different ones.
 
-Many customers paid through tokenized invoice links and had no account credentials. Adding a new
-account system and self-service management would expand the work considerably. For this project,
-the team decided that customers could contact the invoicer to turn off Autopay:
+## Follow the interaction until you find where it stops
 
-1. **Invoicer's customer list:** open the customer's detail page.
-2. **Customer detail:** use a new action to disable Autopay.
+Turning Autopay on isn't the whole experience, because a customer also needs a way to turn it off
+later. Many customers had no username or password, because they paid each invoice through its own
+unique link. A self-service page would have needed a new account system, which would have added a
+lot of work. For this project, the team decided that a customer could ask the invoicer to turn
+Autopay off, and they added one action to a page that invoicers already had:
 
-The solution reused an existing place instead of requiring a new login and account-management
-flow. Whether that compromise is acceptable depends on the product and its customers. The case
-does not establish a general rule against self-service.
+```text
+Customer list          Customer detail
+─────────────          ───────────────
+Customer detail ─────▶ Disable Autopay
+```
 
-The resulting elements were small and connected: an Autopay option during payment and a disable
-action for the invoicer. Visual design and ordinary implementation choices remained open, while
-the current-invoice behavior and management boundary were explicit.
+The solution reused an existing place instead of adding a login and a page for managing Autopay.
+Whether that compromise works depends on the product and its customers, and the case doesn't set a
+general rule against self-service.
+
+The result was two small elements that connect to each other: an Autopay option on the existing
+payment screen, and a disable action for the invoicer. Visual design and ordinary implementation
+choices stayed open, while the behavior for the current invoice and the limit on who can turn
+Autopay off were explicit.
 
 Source: [Find the Elements](https://basecamp.com/shapeup/1.3-chapter-04).
