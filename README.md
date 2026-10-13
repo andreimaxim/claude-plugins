@@ -40,7 +40,7 @@ Claude loads a plugin's skills on its own when a request matches the skill's des
 
 ### write-for-people
 
-- **`explaining-code`** explains how code works and why it was designed that way. It traces the actual code path, and it keeps what the code shows separate from what Claude infers. Inspired by HumanLayer's [show-me](https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md) skill.
+- **`explaining-code`** explains how code works, why it was designed that way, and what a change does. It traces the actual code path, keeps what the code shows separate from what Claude infers, and shows changes as before and after drawings or diffs. Inspired by HumanLayer's [show-me](https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md) skill and the explaining-code skill in [Amp's official plugins](https://github.com/andreimaxim/amp-official-plugins/blob/main/skills/explaining-code/SKILL.md).
 - **`naming-things`** chooses names and terms for variables, functions, tables, endpoints, and domain concepts. It reads how a thing is defined and used before it suggests a name. Adapted from Koleman Nix's [How to name things](https://kolemannix.com/blog/how-to-name-things/).
 - **`plain-writing`** writes and edits prose in a plain and boring style, with everyday words, complete sentences, no dashes, and no jargon. It applies to documents, READMEs, emails, commit messages, PR descriptions, and code explanations, but not to code. Once the plugin is installed, Claude uses this style for most prose it writes for you. To rewrite Claude's previous reply for a reader with no context, run `/write-for-people:plain-writing deslopify` or ask Claude to "deslopify" the reply.
 

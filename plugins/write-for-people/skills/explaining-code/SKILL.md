@@ -1,107 +1,229 @@
 ---
 name: explaining-code
-description: Explains how code and software systems work and investigates the reasons behind design decisions. Use for code explanations, architecture walkthroughs, runtime and data flows, state transitions, ownership questions, or historical design rationale.
+description: Explains how code and software systems work, why they were designed that way, and what a change does, using plain prose with call trees, diagrams, pseudocode, and diffs. Use when the user asks how something works, for architecture walkthroughs, runtime and data flows, state transitions, or ownership questions, for the history behind a design decision, or when the user asks what a change does, such as a diff, a commit, a pull request, or the work just done in this session.
 ---
 
 # Explaining code
 
-Help the user build an accurate mental model of existing code, system behavior, and the reasons
-behind its design.
+Explaining code helps the user understand how existing code works, why it was designed that way, or
+what a change does. Lead with the answer in plain technical prose, and add a view such as a call
+tree or a diagram only when it makes the answer easier to follow.
 
-## Establish the behavior
+## Find out what the code does
 
-Inspect the relevant code before explaining it. Start from the boundary that best matches the
-question, such as a public method, command, request, event, job, or user interaction. Follow the
-path through the calls, state, data, and integrations that produce the observable result.
+Read the relevant code before you explain it. Start from the entry point that best matches the
+question, e.g., a public method, a command, a request, an event, a job, or a user action. Then
+follow the path through the calls, state, data, and integrations that produce the result the user
+asked about.
 
-Read only enough of the system to answer the question. Use tests and contracts to establish edge
-cases and invariants when they matter. Distinguish behavior observed in the code from an inference.
-State material uncertainty instead of presenting a plausible explanation as established behavior.
+Read only as much of the system as the question needs. Use tests and contracts to confirm edge cases
+and invariants when they affect the answer. Keep what you saw in the code separate from what you
+infer, and say when you're unsure, instead of presenting a plausible explanation as fact.
 
-Explain one coherent path or decision at a time. Lead with the answer to the user's question, then
-show the behavior or evidence that supports it. Name the functions, types, files, data, and ownership
-boundaries the reader needs. Keep unrelated implementation detail out of the explanation.
+Explain one path or one decision at a time. Start with the answer to the user's question, and then
+show the code or evidence that supports it. Name the functions, types, files, data, and ownership
+boundaries the reader needs, and leave out implementation details that don't bear on the question.
+Use the repository's own terms for its concepts, and define a technical term when the user may not
+know it.
 
-Use the repository's domain terms consistently. Use its programming language for code sketches.
-When a path crosses languages, show each boundary in its actual language. Use language-neutral
-pseudocode when syntax would distract from the behavior.
+## Find out why it was designed that way
 
-## Explain the rationale
+When the user asks why a design exists or where it came from, investigate the decision as well as
+the current code. A question about why the code produces a particular result usually needs only an
+explanation of the current code.
 
-When the question concerns a design's origin or rationale, investigate the decision as well as the
-current code. Questions about why execution produces a particular result may need only an explanation
-of the current code.
+For a question about history, trace the changes that introduced the behavior or changed it in an
+important way. The last commit to touch a line is often unrelated to why the line exists. Read the
+pull request discussions, tickets, design records, and incident reports that bear on the question,
+when you can reach them. Look for the constraints, alternatives, and tradeoffs that shaped the
+choice, and keep the investigation in proportion to the question.
 
-For historical questions, trace the changes that introduced or materially reshaped the behavior
-rather than treating the last commit to touch a line as its explanation. Consult relevant PR
-discussions, tickets, design records, and incident evidence when available and useful for resolving
-the question. Look for the constraints, alternatives, and tradeoffs that informed the choice. Keep
-the investigation proportional to the question.
+Keep three kinds of claims apart in the answer. The first is what the code does, and the second is
+what the historical record says. The third is what you infer from the evidence, and you should
+explain the evidence for an inference instead of presenting it as recorded intent. For example, a
+commit that changes a limit from 50 to 100 shows the new limit, but it doesn't show why 100 was
+chosen. A benefit the code provides today doesn't show why it was first written, or that the
+original constraint still applies. When the user suggests a reason, treat it as a hypothesis to
+check, and don't set out to confirm it.
 
-Distinguish what the code does, what the historical record explicitly says, and what you infer from
-the evidence. A change from a limit of 50 to 100 establishes the new limit, not why 100 was chosen.
-Explain the evidence supporting an inferred rationale without presenting it as recorded intent. A
-benefit the code provides today does not establish its original motivation or show that the original
-constraint still applies. Treat a rationale suggested by the user as a hypothesis to test, not a
-conclusion to confirm.
+Cite the sources for historical claims, and explain any contradictions between them. When the
+reason is still unknown, say what the sources you read establish and what is still open. Mention
+missing records, places you couldn't search, or access you didn't have when they affect the answer.
+Not finding a reason doesn't show that there wasn't one.
 
-Cite the sources supporting historical claims and explain material contradictions in the evidence.
-When the reason remains unknown, say what the inspected sources establish and what remains
-unresolved. Identify missing records, search gaps, or access limitations when they materially affect
-the answer. Failure to find a reason is not evidence that no reason existed.
+## Choose a view
 
-## Show the behavior
+Pick the smallest view that makes the answer clear, or use prose alone when prose is clearer.
 
-Prefer code-native explanations—snippets, signatures, pseudocode, call trees, diffs, and file
-trees. Use diagrams when relationships, interactions, or state transitions are clearer spatially.
-Diagrams should support the explanation, not become its default form.
+| What the reader needs to see | View |
+| --- | --- |
+| Logic or an algorithm | Pseudocode |
+| The order of calls at runtime | Call tree |
+| Which component owns UI state or behavior | Component tree |
+| Which file or module is responsible for what | Shallow file tree |
+| An exact contract, data shape, or signature | Code |
+| Interactions, data flow, states, or architecture | Line drawing |
 
-Pick the smallest view that makes the answer clear:
+Place each view next to the sentence it supports, and keep only the calls, files, values, states,
+and boundaries that bear on the question. You can use one view or several, but you'll rarely need
+all of them. Each view should add information that the prose doesn't already give.
 
-- logic or an algorithm → pseudocode;
-- runtime order → call tree;
-- an exact contract, state shape, or ownership boundary → code;
-- a change to an existing path → focused diff;
-- file ownership → shallow file tree;
-- relationships, interactions, or state transitions → diagram.
+Write code in the repository's language. When a path crosses languages, show each side in its own
+language, and use pseudocode when the syntax would distract from the behavior. Show a complete
+block when leaving parts out would hide the order of steps or who owns them.
 
-Place each view next to the text it supports. Keep only the calls, files, values, states, and
-boundaries that matter to the question. Show a complete block when omitted context would hide
-order or ownership.
-
-For example, show decision logic with a short code example, here in Ruby:
-
-```ruby
-def format_file(path)
-  original = File.read(path)
-  formatted = original.strip + "\n"
-  return if formatted == original
-
-  File.write(path, formatted)
-end
-```
-
-Show runtime order and ownership with a call tree, here in a TypeScript module:
+A call tree shows the order and nesting of the calls that decide the result, and it doesn't need
+every function on the stack. Add the file for each call when the reader needs to know which file
+owns it, as in this TypeScript example:
 
 ```text
-formatFile(path: string): Promise<void>    src/formatter.ts
-  await readFile(path, "utf8")            node:fs/promises
-  formatText(original)                   src/text.ts
+formatFile(path)                  src/formatter.ts
+  readFile(path, "utf8")          node:fs/promises
+  formatText(original)            src/text.ts
   if formatted !== original
-    await writeFile(path, formatted)     node:fs/promises
+    writeFile(path, formatted)    node:fs/promises
 ```
 
-Show responsibility with a shallow file tree, here in a Go project:
+A component tree shows where UI behavior lives. Add only the state, hooks, files, and package
+boundaries that explain it:
+
+```tsx
+<CheckoutPage>                    app/routes/checkout.tsx
+  useCart()
+  <PaymentForm>                   packages/payments
+    usePaymentIntent()
+  <OrderSummary>
+```
+
+A shallow file tree shows which part of the code is responsible for what, as in this Go project:
 
 ```text
 .
-├── cmd/format/main.go        # parses CLI arguments
-├── internal/format/format.go # formats content and skips unchanged writes
-└── internal/files/files.go   # reads and writes files
+├── cmd/format/main.go          # parses command line arguments
+├── internal/format/format.go   # formats content and skips unchanged writes
+└── internal/files/files.go     # reads and writes files
 ```
 
-When the question is about how a path changed, preserve context with a diff. This Rust diff skips
-unnecessary writes:
+### Line drawings
+
+Draw diagrams as Unicode line art in a `text` code block, because the terminal and the Claude apps
+both show it exactly as written. Don't use Mermaid in a reply, because the terminal and many other
+places where people read Claude Code show its source code instead of a drawing.
+
+Draw the main structure with light lines (`─ │ ┌ ┐ └ ┘ →`). Draw the one path, state, or step that
+answers the question with heavy lines (`━ ┃ ┏ ┓ ┗ ┛ ▶ ▼`), so the reader sees it first. Use concrete
+labels, such as the function names, queue names, and states from the code.
+
+```text
+┌──────────┐     ┌───────────┐     ┌──────────┐
+│ Request  │────→│ Validate  │────→│ Persist  │
+└──────────┘     └─────┳─────┘     └──────────┘
+                       ┃ invalid
+                       ▼
+                 ┏━━━━━━━━━━━┓
+                 ┃ 422 error ┃
+                 ┗━━━━━━━━━━━┛
+```
+
+### Rendered pages
+
+Some ideas are too dense for line art, e.g., a visual UI, a page layout, or a comparison of several
+states. If the session has a tool that shows the user a rendered page, such as an artifact tool, you
+can make one focused HTML page for such an idea. Choose a diagram, an infographic, or a short slide
+deck, depending on the point. Match the product's colors, type, spacing, and components, use the
+product's own labels and data, and make the page work on both desktop and mobile. If the session
+has no such tool, use line art, and offer to write the page as a file the user can open.
+
+## Explain a change
+
+A change is anything that makes the code behave differently than it did before, e.g., a diff, a
+commit, a pull request, a fix, a proposal, or the work just done in this session. Show a change with
+a drawing by default, because the reader then sees the difference at once, while prose alone makes
+them rebuild both versions in their head. Draw what the system does, rather than which lines were
+edited, e.g., the path a request takes, the states an object moves through, the order of calls, who
+owns the data, or what the user sees on screen.
+
+Choose the form by what the reader has to compare:
+
+- When behavior was replaced, rerouted, or removed, draw a "Before" and an "After" in one block. Use
+  the same layout and labels in both, so only the difference moves. Put them side by side when the
+  block stays under about 70 columns, and otherwise put "Before" above "After". For a small change,
+  two aligned lines labeled "Before" and "After" are enough.
+- When behavior was added and the earlier state was only its absence, draw the result alone.
+- When the exact text is the point, such as a signature, a config value, or a schema field, show a
+  focused `diff` block instead of a drawing.
+
+Draw the unchanged parts with light lines and the changed parts with heavy lines. Write an important
+consequence, such as a latency, a count, or an error, next to the part that causes it.
+
+State the change in one sentence, and put the drawing right after it. After the drawing, add only
+what the drawing can't show, e.g., the reason for the change, the edge cases, and the risks. A
+change with nothing to draw, such as a rename, a typo fix, or a new constant value, gets one
+sentence and no drawing.
+
+For example, the signup handler no longer sends the welcome email itself, and a background job sends
+it instead:
+
+```text
+Before                          After
+
+┌──────────┐                    ┌──────────┐
+│ Signup   │                    │ Signup   │
+└────┬─────┘                    └────┳─────┘
+     │ deliver_now                   ┃ deliver_later
+     ↓                               ▼
+┌──────────┐                    ┏━━━━━━━━━━┓
+│ SMTP     │                    ┃ Job      ┃
+└──────────┘                    ┗━━━━┳━━━━━┛
+                                     ┃ 5 retries
+signup waits up to 10 s              ▼
+                                ┌──────────┐
+                                │ SMTP     │
+                                └──────────┘
+
+                                signup returns in 40 ms
+```
+
+When behavior was added, the result alone is enough. For example, an upload that fails its virus
+scan now goes to quarantine instead of staying in the pending state:
+
+```text
+pending ──→ scanning ──→ stored
+               ┃
+               ┃ scan fails
+               ▼
+           ● quarantined
+```
+
+### Diffs of structure
+
+A `diff` block doesn't have to be a diff of source code. Match it to the view the user is already
+looking at, so they can see the change without translating edited lines back into the system. For
+example, here is a change to a call tree:
+
+```diff
+ submitOrder
+   validateCart
++  reserveStock
+   chargeCard
+-  sendReceipt
++  enqueueReceipt
+```
+
+Here is a change to a file layout:
+
+```diff
+ app/
+ ├── models/
+-├── billing.rb
++├── billing/
++│   ├── invoice.rb      # builds invoices
++│   └── charge.rb       # talks to the payment provider
+ └── controllers/
+```
+
+When the exact source is the point, show a focused source diff. For example, the following Rust
+diff skips the write when the content hasn't changed:
 
 ```diff
  fn format_file(path: &Path) -> io::Result<()> {
@@ -115,12 +237,18 @@ unnecessary writes:
  }
 ```
 
+Show the whole block instead of a diff when most of it is new, when a diff would hide the order of
+steps or who owns them, or when the user needs a target they can copy.
+
 ## Stay within the question
 
-Explain the current system rather than silently redesigning it. If the user asks for an evaluation,
-separate the factual walkthrough from the judgment. If the user asks about a proposed change,
-separate current behavior from proposed behavior and use a diff when it makes the distinction clear.
+Explain the system as it is, and don't redesign it in the middle of an explanation. If the user asks
+for an evaluation, keep the factual walkthrough separate from your judgment. If the user asks about
+a proposed change, keep the current behavior separate from the proposed behavior.
 
-Before finishing, check that the explanation answers the user's actual question, supports important
-claims with inspected evidence, distinguishes findings from inference, uses consistent terms, and
-includes no visual more complex than the behavior it clarifies.
+Before you finish, check the explanation against these points:
+
+- It answers the question the user asked.
+- Evidence you inspected supports each important claim, and inferences are marked as inferences.
+- It uses the same term for the same thing throughout.
+- No view is more complex than the behavior it explains.

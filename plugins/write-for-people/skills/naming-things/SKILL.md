@@ -11,8 +11,6 @@ code does. Later changes build on the names that are already there, and a vague 
 work to repeat or extend the same misunderstanding. Name a thing for what it is or does, and not for
 the reason one caller needed it at the time.
 
-Adapted from Koleman Nix's [How to name things](https://kolemannix.com/blog/how-to-name-things/).
-
 ## Understand the thing before you suggest a name
 
 Use the guidance in this skill to understand the thing, and don't treat it as a checklist or a
