@@ -68,7 +68,7 @@ Pick the smallest view that makes the answer clear, or use prose alone when pros
 | Interactions, data flow, states, or architecture | Line drawing |
 
 Place each view next to the sentence it supports, and keep only the calls, files, values, states,
-and boundaries that matter to the question. You can use one view or several, but you'll rarely need
+and boundaries that bear on the question. You can use one view or several, but you'll rarely need
 all of them. Each view should add information that the prose doesn't already give.
 
 Write code in the repository's language. When a path crosses languages, show each side in its own
@@ -134,8 +134,8 @@ Some ideas are too dense for line art, e.g., a visual UI, a page layout, or a co
 states. If the session has a tool that shows the user a rendered page, such as an artifact tool, you
 can make one focused HTML page for such an idea. Choose a diagram, an infographic, or a short slide
 deck, depending on the point. Match the product's colors, type, spacing, and components, use the
-product's own labels and data, and make the page work on both desktop and mobile. If the session has no such tool,
-use line art, and offer to write the page as a file the user can open.
+product's own labels and data, and make the page work on both desktop and mobile. If the session
+has no such tool, use line art, and offer to write the page as a file the user can open.
 
 ## Explain a change
 
