@@ -57,3 +57,5 @@ does not establish a general rule against self-service.
 The resulting elements were small and connected: an Autopay option during payment and a disable
 action for the invoicer. Visual design and ordinary implementation choices remained open, while
 the current-invoice behavior and management boundary were explicit.
+
+Source: [Find the Elements](https://basecamp.com/shapeup/1.3-chapter-04).

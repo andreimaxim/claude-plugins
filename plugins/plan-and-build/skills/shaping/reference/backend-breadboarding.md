@@ -108,3 +108,5 @@ A small authorized experiment can settle a technical uncertainty. It does not au
 the whole feature or establish production readiness. Leave endpoint spelling, schema, class
 structure, and infrastructure choices open unless evidence makes one necessary to close a real
 rabbit hole.
+
+Technique source: [Find the Elements](https://basecamp.com/shapeup/1.3-chapter-04).
