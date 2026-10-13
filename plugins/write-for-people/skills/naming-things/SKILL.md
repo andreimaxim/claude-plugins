@@ -5,123 +5,185 @@ description: Chooses and evaluates names and terminology by clarifying meaning, 
 
 # Naming things
 
-Use a name to communicate what the thing means to the next reader, whether human or model.
-Names become context for future changes, so imprecise terminology can lead later work to repeat or
-extend a misunderstanding. Base names on concrete behavior and domain intent rather than extending
-an earlier approximation. Name what the thing is or does, not merely the immediate reason someone
-needed it.
+A name tells the next reader, whether a person or a model, what a thing means. Most of the text in
+a codebase is uses of the project's own names, so names are the main way a reader learns what the
+code does. Later changes build on the names that are already there, and a vague name can lead later
+work to repeat or extend the same misunderstanding. Name a thing for what it is or does, and not for
+the reason one caller needed it at the time.
 
 Adapted from Koleman Nix's [How to name things](https://kolemannix.com/blog/how-to-name-things/).
 
-## Understand before proposing names
+## Understand the thing before you suggest a name
 
-Treat these considerations as prompts for understanding, not a checklist or scoring system.
-Investigate and weigh the context that materially changes what the name communicates. Base the
-recommendation on the decisive semantic distinction, not merely on compliance with a convention.
-Scale investigation to the name's scope and semantic risk.
+Use the guidance in this skill to understand the thing, and don't treat it as a checklist or a
+score. Base the recommendation on the difference in meaning that decides the name, rather than on
+whether the name follows a convention. Spend more time on names with a wide scope or a high risk of
+being misread, and less on a short-lived local name.
 
-Read the relevant definition and its surrounding flow, then inspect representative writers,
-readers, and call sites. Where relevant, use contracts, tests, schemas, documentation, and persisted
-data as further evidence. Investigate disagreements rather than automatically privileging existing
-terminology, historical intent, or current implementation. A contract may constrain what can
-safely change without establishing that the underlying concept is coherent.
-For a new design, work from concrete intended behavior and examples instead. Do not infer what
-something means from its current name alone.
+Gather evidence about the thing in order:
 
-Establish what the thing is, what it does, where it comes from, and which distinctions matter.
-Consider its domain meaning, lifecycle, units, absence, errors, and relationships where relevant.
-Distinguish essential semantics from incidental implementation details and from the particular
-use that prompted the name. Current uses are evidence, but no single use defines a general abstraction.
-Write a brief plain-language definition if meaning is difficult to pin down. If two incompatible
-definitions fit, investigate the conflict rather than selecting a word that conceals it.
+1. Read the definition and the code around it.
+2. Read a few representative places that write the value, read it, or call it.
+3. Where they help, check contracts, tests, schemas, documentation, and stored data.
 
-Identify who will read the name and where. A local binding, a public API, a URL parameter, and a
-product name have different contexts. Some names must serve both users and code. Read the
-surrounding code or interface as that audience would, rather than evaluating isolated words.
+When these sources disagree, find out why, and don't assume that the existing term, the original
+intent, or the current code is the right one. A contract can limit what you can safely change, but
+it doesn't prove that the concept behind it is coherent. For a new design, work from the behavior
+you intend and from concrete examples instead. In both cases, don't decide what something means
+from its current name alone.
 
-## Choose names in context
+Find out what the thing is and what it does, and where its value comes from. Where they matter,
+also consider its domain meaning, lifecycle, units, errors, relationships to other things, and what
+its absence means. Separate what the thing means from the details of how it's implemented today,
+and from the particular use that prompted the name. The current uses are evidence, but no single use
+defines a general operation. If the meaning is hard to pin down, write a short definition in plain
+words. If two definitions fit and they conflict, investigate the conflict instead of choosing a word
+that hides it.
 
-- Express the actual concept or operation. Put a caller's particular purpose in its local names
-  rather than including that purpose in a general operation's name. Retain domain language when
-  the behavior genuinely belongs to that domain. Do not give domain-specific behavior a name
-  that implies it is general.
-- Look for an existing language or library idiom before giving an ordinary operation a custom
-  name and wrapper. A wrapper that adds no meaning may not need to exist.
-- Read related names together. Consider pairs and families, such as `src` and `dst`, whose
-  symmetry makes relationships apparent. Ensure fields collectively tell one unambiguous story.
-- Use established terminology when it carries the right meaning. Do not preserve a misleading
-  term merely for uniformity, or introduce synonyms for the same concept without a reason.
-- Weigh brevity, explicitness, abbreviations, and type information against the reader's context.
-  Do not enforce blanket rules to always abbreviate, never abbreviate, use long names, or mark
-  every optional value. Apply the same care to each naming decision without requiring every name
-  to follow the same pattern.
-- Distinguish shared meaning from accidental similarity. Expressions of the same fact should
-  refer back to an authoritative definition rather than independently defining it. Multiple
-  representations or audience-specific terms may be appropriate, but their relationship should
-  be explicit. Keep different facts separate even when their values or implementations match:
-  a maximum name length and a default queue depth both equal to 64 are not one shared fact.
+Find out who will read the name and where they'll see it. For example, a local variable, a public
+API, a URL parameter, and a product name each have different readers, and some names, such as URL
+parameters, have to work for both users and code. Read the code or interface from the top, the way
+a teammate would read it, instead of judging the name as a word on its own.
 
-Recommend an outcome that accurately communicates the concept, without unnecessary change.
-That may mean keeping the existing name, renaming it, consolidating competing terminology,
-replacing a needless wrapper with an established idiom, or identifying a modeling decision
-that must precede naming. Distinguish what needs to change from what the task authorizes you
-to implement.
+## Choose a name that fits its context
 
-When a new name is appropriate, prefer one well-supported recommendation. Offer alternatives
-only when they express a meaningful unresolved distinction, and explain that distinction rather
-than producing a thesaurus list.
-Evaluate a candidate name at its definition and representative uses. Check whether it communicates
-the same meaning at each site without requiring knowledge of why the original author wrote it.
+Name the concept or operation itself. Put one caller's purpose in that caller's local names, instead
+of in the name of a general operation. Keep domain words when the behavior belongs only to that
+domain, and don't give domain-specific behavior a name that suggests it's general.
 
-## Follow naming discomfort into the model
+A function named after one caller's need can only be found and used for that need. Someone looking
+for the general operation won't find it under that name, and won't trust it if they do. A reader who
+meets a call to it while fixing a bug can't trust the name either, so they have to read the body to
+learn what it does. Before you name an ordinary operation, check whether the language or a library
+already has an idiom for it, because a wrapper that adds no meaning may not need to exist.
 
-Difficulty naming an incomplete design is normal. Let the name develop as understanding improves.
-If a design is meant to be settled but remains difficult to name clearly, investigate conflicting
-meanings, mixed responsibilities, redundant states, or distinctions the model does not represent.
-Finding a fitting name during refinement is evidence of increasing clarity, not proof that the
-design is correct. Do not give an unresolved design a polished label that conceals its problems.
+Read related names together. Look for pairs and families of names, such as `src` and `dst`, that
+mirror each other so the relationship shows on the page. Fields that sit together, such as the date
+columns on one table, should tell one clear story as a set.
 
-For optional values, determine what absence means. Overrides are naturally sparse. A parse
-failure is not just another kind of missing override. If an absent map and an empty map mean
-the same thing everywhere, consider normalizing them at the boundary. If absence signifies an
-error, consider handling it explicitly and early. Do not collapse states until their equivalence
-is established, or assume every optional value needs `maybe_` or `_opt` in its name.
+Use an established term when it has the right meaning. Don't keep a misleading term only for
+uniformity, and don't introduce a second word for the same concept without a reason.
 
-If a name hides inconsistent behavior or persisted meanings, report the conflict and the
-required decision. Renaming alone does not repair semantics or historical data. Separate a
-behavior-preserving rename from changes to behavior, representation, or migrations. Carry out
-only changes authorized by the task. A naming request is not permission for a system redesign.
+Decide on length, abbreviations, and type information in a name based on what the reader needs at
+that spot. Rules like "always abbreviate", "never abbreviate", "use long names", or "mark every
+optional value" let you skip the thinking, so don't apply them. Be consistent about the care you
+take with each name, and don't require every name to follow the same pattern.
 
-## Examples to reason from
+Keep different facts separate even when their values match. A fact should be defined in one place,
+and every other place that states the same fact should refer to that definition. Two values that
+happen to be equal aren't always the same fact, e.g., a maximum name length and a default queue
+depth that are both 64 should stay two constants. A concept can have several representations or
+terms for different audiences, but make the relationship between them explicit.
 
-- **A rounding helper called `toPixels`:** inspect the arithmetic, rounding mode, valid range,
-  and conversion behavior. If it performs only a general numeric operation, name that operation
-  accurately and communicate pixels at the call site. Do not assume a rounding formula is
-  equivalent to a standard `round` function for negative numbers or other edge cases.
-- **`created_at` versus `uploaded_at`:** a synthetic configuration object may begin to exist
-  when its row is inserted. A birth certificate existed before upload. Separate the upload
-  timestamp from `record_date` and `last_reviewed_at`. Distinguish a date from an instant.
-  Choose the event the value actually records, not a universal timestamp suffix policy.
-- **`documentDate`:** trace both assignment and consumption. If ingestion records arrival
-  while the review screen and staleness rule expect the date on the document, no single rename
-  makes those meanings consistent. Identify the semantic split and historical-data risk.
-- **`mergeTargetValuesIntoSourceTemplate`:** if its entire behavior is the language's ordinary
-  map union, prefer that idiom (such as Scala's `template ++ values`) over a purpose-specific
-  wrapper. Confirm collision precedence and other behavior before replacing it.
-- **`fallbackConfig`:** determine whether this is a complete configuration used when another
-  fails or sparse overrides layered onto a baseline. Name the actual role. If different uses
-  imply conflicting roles, resolve that conflict in the model before choosing the name.
+Recommend the outcome that communicates the concept accurately with the least change. The outcome
+may be one of the following:
 
-## Finish at the right scale
+- Keep the existing name.
+- Rename the thing, or merge competing terms into one.
+- Replace a wrapper that adds no meaning with an existing idiom.
+- Settle a modeling decision before anyone chooses a name.
 
-For advice, give the recommended outcome and the key contextual reason. When that outcome
-includes a name, state the name and its precise meaning. Include a short usage example when
-it makes the recommendation clearer. State unresolved semantics and the evidence needed to
-settle them. Do not impose a formal report on a small naming decision.
+Separate what needs to change from what the task lets you implement.
 
-For an authorized rename, follow references through the affected code and relevant external
-contracts, including serialized fields, schema, routes, and documentation. Use available
-symbol-aware reference and rename tools, and inspect dynamic or external references those tools
-may miss. Preserve compatibility where required. Do not treat a public or persisted name as an
-internal identifier. Run the repository's relevant checks and distinguish a verified rename from
-a proposed model fix.
+When a new name is needed, give one recommendation with the evidence for it. Offer alternatives only
+when they reflect an open question about meaning, and explain that question instead of listing
+synonyms. Check the candidate at its definition and at representative uses, and make sure it means
+the same thing at each place to a reader who doesn't know why the author wrote it.
+
+## When a name is hard to choose or hard to read
+
+An unclear existing name often points to a vague concept. When you find a name that seems unclear
+while you work on another task, investigate it before you rely on it, because your task may depend
+on what it actually means. Usually the name is someone's best attempt to label a vague concept,
+rather than a poor label on a clear one. Often different parts of the code use the name with
+different meanings, and both meanings are reasonable readings of the name, but one of them is a bug.
+
+It's normal to struggle to name a design that isn't finished, so let the name develop as you
+understand the design better. If the design is meant to be settled and still has no clear name,
+look for conflicting meanings, mixed responsibilities, redundant states, or differences the model
+doesn't represent. When a good name appears during refinement, it's evidence that the design is
+getting clearer, but it doesn't prove that the design is correct. Don't give an unresolved design a
+polished name that hides its problems.
+
+For an optional value, find out what its absence means, and don't follow a rule that adds `maybe_`
+or `_opt` to every optional name. For example, overrides are optional by nature, because they're
+layered on top of a complete baseline configuration. A parse failure is different, and it isn't
+just another missing override. If absence means an error, handle the error early, or choose a name
+that says the value can be missing because of an error. If an absent map and an empty map mean the
+same thing everywhere the value is read, consider turning the absent map into an empty map where the
+value enters the system. Don't merge the two states until you've confirmed that they mean the same
+thing.
+
+If a name hides inconsistent behavior or stored data with mixed meanings, report the conflict and
+the decision someone needs to make. Renaming alone doesn't fix the behavior or the historical data.
+Keep a rename that preserves behavior separate from changes to behavior, data shape, or migrations.
+Make only the changes the task asks for, because a request about a name isn't permission to redesign
+the system.
+
+## Examples
+
+### A rounding helper named `toPixels`
+
+Check the arithmetic, the rounding mode, the valid range of inputs, and how the result is
+converted. If the function only does a general numeric operation, name that operation, and say
+"pixels" in the caller's variable names. Don't assume that a formula such as "add 0.5 and convert to
+an integer" matches a standard `round` function, because it can give a different result for negative
+numbers.
+
+### `created_at`, `created_on`, `uploaded_at`, and `issued_at`
+
+`created_at` is a good default name for the moment a row's thing began to exist, and the `_at`
+suffix marks a point in time. When the column holds a date rather than a timestamp, `created_on`
+reads better, because people say "on" a day and "at" a time. `created_at` fits a synthetic object,
+such as a display configuration, because the object exists only inside the system and begins to
+exist when its row is inserted.
+
+A row that describes something in the real world needs a name for the event the value records. For
+example, a birth certificate that someone uploaded in 2023 was issued in 1995, so a column named
+`created_at` would claim the wrong year. Name each column for its event, e.g., `uploaded_at` for
+when the file arrived or `issued_at` for when the document was issued, instead of giving every table
+the same timestamp column.
+
+Read the date columns on a table together. For a document the system received, `uploaded_at`,
+`record_date`, and `last_reviewed_at` tell one clear story as a set, and `record_date` is a date
+rather than a timestamp.
+
+### `documentDate`
+
+Trace where `documentDate` is set and where it's read. Suppose ingestion stores the day the file
+arrived, while the review screen shows the value as the date printed on the document. A staleness
+rule that rejects bank statements older than 90 days then checks the wrong date for some documents,
+whichever meaning its author intended. No single rename makes those meanings agree. Report the split
+in meaning and the affected checks, and report the risk to stored data, because a fix may need a
+migration and a backfill.
+
+### `mergeTargetValuesIntoSourceTemplate`
+
+If the function's whole behavior is the language's ordinary map union, prefer the idiom, such as
+Scala's `template ++ values`, over a wrapper named after one use. Nobody looking for a way to
+combine two maps would find the function under its current name. Before you replace it, confirm
+which map wins when both have the same key, and check for any other behavior the idiom doesn't
+have.
+
+### `fallbackConfig`
+
+Find out whether `fallbackConfig` is a complete configuration used when another one fails, or a
+sparse set of overrides layered on a baseline, and name the role it has. If its type is
+`Option[Map[String, String]]`, absence is expressed twice, because both the map and any key in it
+can be missing. Decide whether the two kinds of absence differ, as described for optional values
+above. If different uses imply conflicting roles, resolve the conflict in the model before you
+choose the name.
+
+## Give advice or carry out the rename
+
+For advice, give the recommended outcome and the main reason from the context. When the outcome
+includes a name, state the name and exactly what it means, and add a short usage example if it makes
+the recommendation clearer. Say which meanings are still unresolved and what evidence would settle
+them. Keep a small naming decision short, without a formal report.
+
+For a rename the user asked for, follow the references through the affected code and any external
+contracts, e.g., serialized fields, schemas, routes, and documentation. Use symbol-aware reference
+and rename tools when they're available, and check for dynamic or external references the tools may
+miss. Treat a public or stored name differently from an internal identifier, and keep compatibility
+where it's required. Run the repository's relevant checks, and tell the user which changes are a
+verified rename and which are a proposed fix to the model.
