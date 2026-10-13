@@ -75,8 +75,7 @@ containing `name` and `description`, followed by the Markdown body.
   such as colons, so they parse as one string.
 - **Optional metadata:** Include shared specification fields when they serve a concrete purpose.
   When a skill is based on someone else's work, such as another skill, an article, or a book,
-  credit that work in the plugin's README rather than in `SKILL.md`, because a credit in the
-  body gives the agent nothing to act on. A reference file can link to its source material,
+  credit that work in the plugin's README. A reference file can link to its source material,
   so the agent can read more when it needs context. Keep any license notice with the files it
   covers.
 
