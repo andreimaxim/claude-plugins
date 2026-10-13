@@ -5,115 +5,107 @@ description: Shapes raw ideas into rough, solved, bounded plans. Use when asked 
 
 # Shaping
 
-Shaping turns a raw idea into a plan that explains the problem, proposes a solution, and sets
-boundaries on how much work we're willing to take on and what we're not doing. This workflow is
-based on 37signals' Shape Up, which calls the document a **pitch**. Here, we call it a **plan**.
+Shaping turns a raw idea into a short plan that solves one specific problem within agreed limits.
+It follows 37signals' Shape Up, which calls the plan a pitch. Shape Up was written for product
+work, and here we use it for engineering work, so treat each feature as a small product. Its users
+can be people, API clients, other services, or the engineers who maintain the code.
 
-The plan makes the proposed work concrete enough to evaluate without becoming a detailed
-specification or an exhaustive task list. It sets boundaries while leaving designers and
-programmers room to make implementation decisions later.
+A shaped plan has three properties:
 
-Shaped work has three properties:
+- **Rough.** It leaves visible room for designers and programmers to make their own decisions.
+- **Solved.** The main elements fit together, and no open question could sink the solution.
+- **Bounded.** It says what we're not doing and where the team should stop.
 
-- **It's rough**, and obviously so. Everyone can see the open spaces where their contributions
-  will go. Designers and programmers need room to apply their judgment and expertise.
-- **It's solved**, in the sense that it's been thought through. The main elements of the solution
-  are there at the macro level and there is a clear idea of what to do, without open questions or
-  rabbit holes that could undermine the solution. This doesn't mean every implementation decision
-  has been made.
-- **It's bounded.** It indicates what not to do and tells the team where to stop.
+Work through the sections below in order. When a later step finds a problem, go back to an
+earlier one.
 
-Shaping moves through three activities: setting boundaries around the problem and how much change
-we're willing to take on, finding the elements of a solution within those boundaries, and looking
-for risks and rabbit-holes before writing the plan. What we learn along the way may send us back
-to narrow the problem or try a different solution.
+## Frame the problem
 
-## Setting boundaries
+Start from the raw idea, e.g., a user request, a Jira ticket, a GitHub issue, or an
+observability signal. Before you discuss solutions, agree with the user on the problem, the
+outcome, and the appetite.
 
-We start with a raw idea—a user request, a Jira ticket, a GitHub issue, or an observability signal.
-To set boundaries, we need an appetite and a narrow problem definition.
+**Problem.** Treat the request as a symptom, and ask what was happening when someone felt the need
+to ask. For example, a request for permission roles came from someone who archived a file without
+knowing it would disappear for the whole team. Push back on requests that name an area instead of
+a problem, e.g., "improve the files page" or "refactor billing". Ask what isn't working, in what
+context, and what can stay the same. If you can't find a specific pain point, set the idea aside
+rather than invent one.
 
-The appetite is a constraint on how much change we're willing to take on to solve this problem.
-Are we looking for a small improvement within the way things work today, or are we willing to
-rethink an existing workflow? How much additional complexity are we willing to introduce for
-people using and maintaining the system? Establish this with the user, without choosing the
-implementation in advance.
+**Outcome.** Write one or two sentences that say what's true when the work is done, e.g., "An
+export never blocks the request that started it." The stories test the solution against the
+outcome later.
 
-For example, is it enough to let someone leave a note, or is the problem worth introducing
-structured information that people can validate, filter, and report on? The point isn't to choose
-database columns or a text area yet. It's to distinguish a solution we're willing to take on from
-one that's too much for this problem. When a promising idea exceeds that appetite, narrow the
-solution or revisit the appetite explicitly rather than quietly expanding the work.
+**Appetite.** The appetite is how much change we're willing to take on, and it isn't an estimate.
+For example, decide whether a free text note is enough, or whether the problem justifies
+structured data that people can filter and report on. Don't pick database columns or controls yet.
+When a good idea exceeds the appetite, narrow the idea or revisit the appetite with the user,
+instead of quietly growing the work.
 
-In addition to setting the appetite, narrow the problem. Do not take the original request at face
-value. What was happening when somebody felt the need to ask for this?
-
-- A request for permission roles was actually caused by somebody archiving a file without knowing
-  it would disappear for the whole team.
-- A request for adding a calendar was actually about seeing which dates were free.
-
-If we can't tell what the specific pain point is, the appetite is useful for determining the amount
-of research needed. We can stop or set the idea aside rather than manufacture a problem to solve.
-
-Push back on open-ended improvement requests that name an area or activity without a single problem
-or use case. Without that focus, we cannot tell which changes belong or what “done” means. Explain
-this limitation and help the user identify and choose a specific problem to address. What is not
-working, and in what context? Which parts of the existing design can stay the same, and which need
-to change? Agree on the problem and appetite before defining the solution's elements.
-
-When a request needs narrowing or the appropriate level of visual detail is unclear, use the
+For help narrowing a request, or for choosing how much visual detail to show, read the
 [dot calendar case study](reference/dot-calendar.md).
 
-## Finding elements
+## Find the elements
 
-At this stage, we move quickly through many ideas with a thinking partner who shares our background
-knowledge and can give frank feedback. That's the model's role here, not just recording the first
-proposed solution.
+Explore several ideas quickly, and give frank feedback instead of writing down the first proposal.
+Look for the main elements of the solution and how they connect. Add enough detail to walk through
+the interaction, but don't design screens, schemas, or classes yet.
 
-We are looking for the main elements of the solution and how they connect. We need enough detail
-to play through the interaction, but not so much that we get stuck designing screens, database
-schemas, or classes before we know whether the idea works.
+Pick the sketch that fits the idea:
 
-When breadboarding, draw:
+- For a user flow, draw a breadboard of places, the affordances in each place, and the connections
+  between them. Read the [invoice autopay case study](reference/invoice-autopay.md) for an example.
+- For a backend or JSON API, follow the caller from the first request to a useful result. Read
+  [backend breadboarding](reference/backend-breadboarding.md) for an example.
+- When the layout is part of the idea, draw a fat marker sketch, which is too coarse to hold fine
+  detail.
 
-- **Places:** things you navigate to.
-- **Affordances:** what the user can act on.
-- **Connection lines:** how affordances take the user from place to place.
+Number the main areas of the solution, so the plan and the stories can refer to them.
 
-When breadboarding a user flow, use the [invoice autopay case study](reference/invoice-autopay.md)
-to see how places, affordances, and connections reveal behavioral choices.
+## Check the solution with stories
 
-For a backend or JSON API interaction, use [backend breadboarding](reference/backend-breadboarding.md)
-to follow the consumer from an initiating request to a useful outcome. It includes an asynchronous
-export example and guidance on flows, call trees, pseudocode, and diffs.
+Write the stories the solution has to support. A story is one sentence that says who or what acts
+and what they can do, e.g., "An API client can poll the export until the file is ready." For
+internal work, the actor is often a developer or an operator, e.g., "A developer can add a payment
+provider without changing the checkout code." Each story follows a path through the breadboard,
+from where it starts to where it ends.
 
-When the spatial arrangement is part of the idea, use a fat-marker sketch: broad strokes that
-leave out fine detail. The dot calendar is an example. The medium is less important than staying
-rough enough to explore alternatives and leave room for designers and programmers.
+Then write the anti-stories, which describe what must not happen, and mark each one with ✗, e.g.,
+"✗ A retried request creates a second export." Put all the stories in the order of the flow, and
+keep the list to nine or fewer. If you need more, group them.
 
-At the end of this stage, we should be able to walk through a concrete solution. It is still an
-idea to examine, not a commitment to build.
+Check each candidate solution against the same stories, and drop any candidate that allows an
+anti-story. When a connection in the breadboard has no story running along it, either a story is
+missing or the connection isn't needed.
 
-## Risks and rabbit-holes
+Move on when one solution supports every story and allows no anti-story.
 
-This stage is about slowing down and looking critically at the work done so far. One approach is
-to walk through a complete user journey. Additional questions to answer:
+## Find risks and rabbit holes
 
-- Does this require technical work we've never done before?
-- Are we making assumptions about how the parts fit together?
-- Are we assuming a design solution exists?
-- Is there a hard decision we could settle in advance?
+Walk through each story, and ask these questions:
 
-Investigate the assumptions that could derail the project. Read relevant code or contracts when
-needed. Don't treat a plausible explanation as evidence. Resolve the risk, simplify the solution,
-or explicitly leave the risky part out. If the core solution still depends on an unanswered
-question, it isn't ready to present as solved.
+- Does it need technical work we've never done?
+- Are we assuming how the parts fit together?
+- Are we assuming a design solution exists that we haven't found?
+- Is there a hard decision we could settle now?
 
-For a difficult technical question that remains after investigation, consult the Oracle subagent
-when available. Give it the proposed solution, appetite, relevant evidence, and specific uncertainty.
-Its role is to identify problems and advise, not to implement the feature or make the decision for us.
+Check each assumption against the code, contracts, or tests, because a plausible explanation isn't
+evidence. Then deal with each risk in one of these ways:
 
-Make clear what we're not doing and where the team should stop. Once the solution is rough,
-solved, and bounded, write it up using the [plan template](reference/plan-template.md). Keep
-the template's structure and the agreed shape. The plan should make the work understandable
-to someone who wasn't part of the shaping conversation.
+- Resolve it with evidence.
+- Settle a simpler answer now, even if it's less elegant.
+- Cut the risky part, and list it as a no-go.
+
+When the solution depends on how a library, a framework, or another service behaves, ask the
+Librarian instead of inferring it from local code.
+
+If a hard technical question remains, ask the Oracle subagent. Give it the solution, the appetite,
+the evidence, and the specific doubt, and ask whether the solution fits the appetite. Oracle gives
+advice, and we make the decision.
+
+If the core solution still depends on an open question, it isn't solved yet.
+
+## Write the plan
+
+Write the plan with the [plan template](reference/plan-template.md). Keep the shape you agreed on,
+and write for a reader who wasn't part of the conversation.

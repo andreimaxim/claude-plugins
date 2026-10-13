@@ -1,11 +1,11 @@
 # Plan template
 
-Write a self-contained Markdown plan with a descriptive title and the five sections below. The
+Write a self-contained Markdown plan with a descriptive title and the six sections below. The
 reader should be able to understand and evaluate the proposal without having been in the shaping
 conversation. Preserve the agreed shape rather than introducing new decisions while writing the plan.
 
 If the appetite, a consequential design choice, or a feasibility question still blocks the shape,
-label the plan **Draft** and state what must be settled. Including all five headings does not
+label the plan **Draft** and state what must be settled. Including all six headings does not
 mean the work is solved. Distinguish those blockers from ordinary implementation choices
 deliberately left to the team.
 
@@ -19,6 +19,9 @@ Link the original request and supporting evidence where useful. Separate observe
 reported experience or assumptions. Do not infer a failure from the proposed solution or borrow one
 from a reference example. The name of a requested feature is not a problem definition. For internal
 technical work, use the real caller or operator's difficulty rather than inventing a customer story.
+
+End the section with the agreed outcome, which is one or two sentences that say what's true when
+the work is done.
 
 ## Appetite
 
@@ -40,7 +43,27 @@ Use a rough sketch, breadboard, or concrete example where it makes the idea easi
 Explain the trade-offs that make this solution fit the problem and appetite. Add enough context and
 labels for someone outside the conversation to follow it, without reproducing the whole discussion.
 Keep confirmed constraints explicit and show where designers and programmers still have choices.
-Leave file inventories, speculative class hierarchies, and implementation task lists for later.
+Number the main areas of the solution so the stories and the sketch can refer to them. Leave file
+inventories, speculative class hierarchies, and implementation task lists for later.
+
+## Stories
+
+List the stories in the order of the flow, with nine or fewer. Write each story as one sentence
+that says who or what acts and what they can do. Mark each story as new, changed, or as before, so
+the reader can see where the work is. For example:
+
+1. An API client requests an export and gets a job ID back. New.
+2. A worker builds the file and stores it. New.
+3. An API client polls the job until the file is ready. New.
+4. An API client downloads the file through the existing signed URL. As before.
+
+Then list the anti-stories, and mark each one with ✗. For example:
+
+- ✗ A retried request creates a second export.
+- ✗ A client downloads another account's export.
+
+Implementation starts from the list, and the team can change the stories or their order as they
+learn more.
 
 ## Rabbit holes
 
