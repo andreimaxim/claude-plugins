@@ -46,7 +46,3 @@ Neither had to discover what kind of calendar the project was supposed to be.
 Use the case to ask what smaller set of elements would improve the actual situation. Do not assume
 that every calendar request is about free spaces, or that the same exclusions fit another product.
 The customer story justified these trade-offs. The feature's name alone did not.
-
-Sources: [Principles of Shaping](https://basecamp.com/shapeup/1.1-chapter-02),
-[Set Boundaries](https://basecamp.com/shapeup/1.2-chapter-03), and
-[Find the Elements](https://basecamp.com/shapeup/1.3-chapter-04).

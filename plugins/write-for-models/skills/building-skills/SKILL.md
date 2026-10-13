@@ -74,7 +74,9 @@ containing `name` and `description`, followed by the Markdown body.
   The specification permits at most 1,024 characters. Quote values containing YAML punctuation,
   such as colons, so they parse as one string.
 - **Optional metadata:** Include shared specification fields when they serve a concrete purpose.
-  When adapting an existing skill, credit the source and preserve any license notices.
+  When adapting an existing skill, credit the source in the plugin's README rather than in the
+  skill's files, because a credit gives the agent nothing to act on. Keep any license notice
+  with the files it covers.
 
 For example, `explaining-code` uses:
 

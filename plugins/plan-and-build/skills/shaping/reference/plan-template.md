@@ -87,5 +87,3 @@ Keep the plan in the conversation unless the user requests a file or destination
 request ends with the plan or an explanation of why the idea is not ready. The plan does not
 authorize publishing it, updating a ticket, or building it. If implementation was also requested,
 continue once the consequential choices are settled.
-
-Source: [Write the Pitch](https://basecamp.com/shapeup/1.5-chapter-06).
