@@ -10,16 +10,16 @@ The plan-and-build plugin helps Claude Code plan a change before building it, bu
 
 ## Subagents
 
-- `plan-and-build:oracle` reviews code, investigates hard bugs, and advises on architecture decisions. It runs on the `fable` model at high effort, and it can use only Read, Glob, Grep, and Bash. `shaping` and `implementing` ask it for advice and for the independent review. Inspired by [Amp's Oracle](https://ampcode.com/docs/tools#oracle).
+- `plan-and-build:oracle` gives a second opinion on hard problems, such as a design or plan before you commit to it, a bug that survives the first explanation, or finished work before you call it done. It runs on the `fable` model at extra-high effort, and it can use only Read, Glob, and Grep. `shaping` asks it to check a plan before the plan is presented as solved, and `implementing` asks it for the independent review. Inspired by [Amp's Oracle](https://ampcode.com/docs/tools#oracle).
 - `plan-and-build:librarian` researches code outside the working tree, including dependencies at their installed version, other repositories, and commit history, and it links to its sources. It runs on the `sonnet` model at medium effort, and it can use Read, Glob, Grep, Bash, WebSearch, and WebFetch. Inspired by [Amp's Librarian](https://ampcode.com/docs/tools#librarian).
 
-Oracle runs at high effort, so a consultation costs more than a regular reply. Oracle needs access to the Fable model.
+Oracle needs access to the Fable model.
 
 ## What the plugin runs and fetches
 
 The plugin contains only instructions. It has no hooks, MCP servers, or scripts, and it doesn't change your permission settings. Every command below runs through Claude Code's normal tools and permission prompts.
 
-- Oracle uses Bash only for inspection, such as `rg`, `git diff`, `git show`, and `git log`. Its instructions forbid edits, installs, branch switches, commits, and pushes.
+- Oracle can only read and search files with Read, Glob, and Grep. It has no shell and no tools that change files.
 - Librarian reads public documentation and source code with WebSearch and WebFetch, and it reads repositories with read-only `git` and `gh` commands, using any access you already have. When remote reads aren't enough, it clones a repository into a new temporary directory to read it, and then deletes the clone. It doesn't run the code it researches or change your checkout.
 - `organizing-commits` rewrites the current branch's commit history by reordering, splitting, squashing, and rewording commits. Before it starts, it saves the starting state, including uncommitted changes, under a backup ref. Afterward, it confirms that the final code matches that state, and it runs the repository's checks on each new commit. It never pushes.
 - `implementing` edits code and runs the repository's checks, like any implementation work in Claude Code.

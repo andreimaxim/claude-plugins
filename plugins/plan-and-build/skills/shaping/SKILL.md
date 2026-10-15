@@ -99,9 +99,9 @@ evidence. Then deal with each risk in one of these ways:
 When the solution depends on how a library, a framework, or another service behaves, ask the
 Librarian instead of inferring it from local code.
 
-If a hard technical question remains, ask the Oracle subagent. Give it the solution, the appetite,
-the evidence, and the specific doubt, and ask whether the solution fits the appetite. Oracle gives
-advice, and we make the decision.
+Before you present the plan as solved, ask the Oracle subagent to check it. Give it the solution,
+the appetite, the evidence, and any remaining doubts, and ask whether the solution works and fits
+the appetite. Oracle gives advice, and we make the decision.
 
 If the core solution still depends on an open question, it isn't solved yet.
 

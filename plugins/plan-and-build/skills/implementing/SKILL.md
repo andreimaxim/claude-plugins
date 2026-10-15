@@ -63,8 +63,8 @@ integrity.
 ## Review and finish
 
 Verify the integrated result with the repository's own checks. Then have the Oracle subagent review
-it in a fresh context. Give it the outcome, the stories, and the constraints, but not the
-implementation conversation, and ask it to check these things:
+it in a fresh context. Give it the outcome, the stories, the constraints, and what changed, but not
+the implementation conversation, and ask it to check these things:
 
 - Correctness, and whether the change follows the repository's guidance.
 - Fit with the surrounding design, and any complexity the change doesn't need.
