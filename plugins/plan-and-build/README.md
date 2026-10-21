@@ -12,7 +12,7 @@ The plan-and-build plugin helps Claude Code plan a change before building it, bu
 ## Subagents
 
 - `plan-and-build:oracle` gives a second opinion on hard problems, such as a design or plan before you commit to it, a bug that survives the first explanation, or finished work before you call it done. It runs on the `fable` model at extra-high effort, and it can use only Read, Glob, and Grep. `shaping` asks it to look for holes in a written plan before the plan is presented as solved, and `implementing` asks it when stuck on a hard question and for the independent review. Inspired by [Amp's Oracle](https://ampcode.com/docs/tools#oracle).
-- `plan-and-build:librarian` researches code outside the working tree, including dependencies at their installed version, other repositories, and commit history, and it links to its sources. It runs on the `sonnet` model at medium effort, and it can use Read, Glob, Grep, Bash, WebSearch, and WebFetch. Inspired by [Amp's Librarian](https://ampcode.com/docs/tools#librarian).
+- `plan-and-build:librarian` researches code that the project doesn't own, such as dependencies at their installed version and other repositories, and the commit history of any repository. It links to its sources. It runs on the `sonnet` model at medium effort, and it can use Read, Glob, Grep, Bash, WebSearch, and WebFetch. Inspired by [Amp's Librarian](https://ampcode.com/docs/tools#librarian).
 
 Oracle needs access to the Fable model.
 
