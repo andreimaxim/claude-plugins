@@ -13,7 +13,7 @@ isn't a recommended architecture.
 
 Suppose a client needs a file of selected records, but preparing the file takes too long to keep
 one request open. One candidate accepts an export request and lets the client fetch the result
-later. The example assumes both of these facts, and other export systems may differ.
+later.
 
 The important difference is that accepting a request isn't the same as completing it. A response
 that says the request was accepted doesn't yet give the client the file it needs.
@@ -34,7 +34,9 @@ detail, e.g., the following:
 - How long the client can still download the file.
 - Whether a notification would suit the client better than repeated status checks.
 
-Explore these choices before you settle endpoint paths, JSON fields, or a queue design.
+Explore these choices before you settle endpoint paths, JSON fields, or a queue design. Not every
+backend feature needs every one of these questions, so follow only the ones that could change the
+solution or how well it fits the appetite.
 
 ## Draw the whole interaction as a short flow
 
@@ -61,7 +63,6 @@ After it receives the identifier, the client can check whether the export is bei
 ready, or has failed. The file is prepared in the background, and the status changes when
 preparation succeeds or fails, whether or not the client checks it. The link to the file appears
 when the export is ready, and a failed result tells the client that waiting won't produce a file.
-The state names are provisional, and they aren't a specification of the wire format.
 
 The flow shows more than "the API starts a job." It shows how accepting the request leads to
 something the client can use, and where the path can stop. It also raises a question about whether
@@ -99,9 +100,6 @@ on status check
   if ready       give the client a way to download the file
 ```
 
-Keep pseudocode at the level of behavior, unless an exact technical contract is needed to settle a
-risk.
-
 A diff helps when the reader already knows the starting point. For this candidate, a before and
 after in words would be:
 
@@ -110,18 +108,6 @@ after in words would be:
   downloads the file when it's ready.
 
 A code diff can show a small change to a known interaction, but it shouldn't bury the client's path
-under implementation details or suggest that the feature is ready to build.
-
-## Keep the open questions visible
-
-Recovering a lost response, how long to keep the file, and whether to notify or poll are choices to
-explore, and not every backend feature needs them. Follow the scenarios that could
-change this solution or how well it fits the appetite. Keep existing access rules and other
-confirmed contracts when you compare candidates.
-
-A small experiment that the user approved can settle a technical question, but it doesn't authorize
-building the whole feature or show that the feature is ready for production. Leave endpoint names,
-schemas, class structure, and infrastructure choices open, unless evidence shows that you need to
-settle one to avoid a rabbit hole.
+under implementation details.
 
 Technique source: [Find the Elements](https://basecamp.com/shapeup/1.3-chapter-04).

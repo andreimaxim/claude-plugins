@@ -42,8 +42,7 @@ structured data that people can filter and report on. Don't pick database column
 When a good idea exceeds the appetite, narrow the idea or revisit the appetite with the user,
 instead of quietly growing the work.
 
-For help narrowing a request, or for choosing how much visual detail to show, read the
-[dot calendar case study](reference/dot-calendar.md).
+For help narrowing a request, read the [dot calendar case study](reference/dot-calendar.md).
 
 ## Find the elements
 
@@ -58,7 +57,7 @@ Pick the sketch that fits the idea:
 - For a backend or JSON API, follow the caller from the first request to a useful result. Read
   [backend breadboarding](reference/backend-breadboarding.md) for an example.
 - When the layout is part of the idea, draw a fat marker sketch, which is too coarse to hold fine
-  detail.
+  detail. Read the [dot calendar case study](reference/dot-calendar.md) for an example.
 
 Number the main areas of the solution, so the plan and the stories can refer to them.
 
@@ -89,19 +88,16 @@ Walk through each story, and ask these questions:
 - Are we assuming a design solution exists that we haven't found?
 - Is there a hard decision we could settle now?
 
-Check each assumption against the code, contracts, or tests, because a plausible explanation isn't
-evidence. Then deal with each risk in one of these ways:
+Check each assumption against the code, contracts, tests, or a small experiment that the user
+approved, because a plausible explanation isn't evidence. Then deal with each risk in one of these
+ways:
 
 - Resolve it with evidence.
 - Settle a simpler answer now, even if it's less elegant.
 - Cut the risky part, and list it as a no-go.
 
 When the solution depends on how a library, a framework, or another service behaves, ask the
-Librarian instead of inferring it from local code.
-
-Before you present the plan as solved, ask the Oracle subagent to check it. Give it the solution,
-the appetite, the evidence, and any remaining doubts, and ask whether the solution works and fits
-the appetite. Oracle gives advice, and we make the decision.
+Librarian subagent instead of inferring it from local code.
 
 If the core solution still depends on an open question, it isn't solved yet.
 
@@ -109,3 +105,29 @@ If the core solution still depends on an open question, it isn't solved yet.
 
 Write the plan with the [plan template](reference/plan-template.md). Keep the shape you agreed on,
 and write for a reader who wasn't part of the conversation.
+
+## Review the plan adversarially
+
+Before you present the plan as solved, ask the Oracle subagent to try to break it. The Oracle
+starts in a fresh context, so it reads the plan the way an outside reader would. Give it the
+written plan and the paths of the files behind your evidence, but not the shaping conversation.
+Ask it to look for these holes:
+
+- A story the solution doesn't support, or an anti-story it allows.
+- A claim about the code, a contract, or a dependency that the evidence doesn't support.
+- A path that stops before the actor gets a useful result.
+- A rabbit hole the plan doesn't name, or work that goes beyond the appetite.
+- A part that a reader can't follow without the shaping conversation.
+
+Weigh each finding against the evidence instead of accepting it automatically. Handle a supported
+finding like any other risk, and go back to the step it affects. When a fix changes the solution,
+the stories, or the appetite, ask the Oracle to review the revised plan. If a finding still
+threatens the core solution, label the plan **Draft** and name the open question.
+
+When you present the plan, list the findings that changed it and the ones you rejected, with a
+reason for each rejection. Oracle gives advice, and we make the decision.
+
+Keep the plan in the conversation unless the user asks for a file or another destination. A request
+for shaping alone ends with the plan, or with an explanation of why the idea isn't ready. The plan
+doesn't authorize publishing it, updating a ticket, or building it. If the user also asked for
+implementation, continue once the consequential choices are settled.

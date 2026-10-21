@@ -1,50 +1,53 @@
 # Plan template
 
-Write a self-contained Markdown plan with a descriptive title and the six sections below. The
-reader should be able to understand and evaluate the proposal without having been in the shaping
-conversation. Preserve the agreed shape rather than introducing new decisions while writing the plan.
+Write the plan as one Markdown document with a descriptive title and the six sections below. A
+reader who wasn't part of the shaping conversation should be able to understand and judge the
+proposal from the plan alone. Keep the shape you agreed on, and don't add new decisions while you
+write.
 
-If the appetite, a consequential design choice, or a feasibility question still blocks the shape,
-label the plan **Draft** and state what must be settled. Including all six headings does not
-mean the work is solved. Distinguish those blockers from ordinary implementation choices
-deliberately left to the team.
+If the appetite, a design choice that would change the solution, or a doubt about whether the
+solution can work still blocks the shape, label the plan **Draft** and say what has to be settled.
+Having all six headings doesn't make the work solved. Keep these blockers apart from the ordinary
+implementation choices that you leave to the team on purpose.
 
 ## Problem
 
-Describe the specific situation that motivated the work: who was trying to do what, where it
-failed, and what improvement would matter. Show the baseline so readers can judge whether this
-solution, or another one, improves the situation.
+Describe the specific situation that led to the work. Say who was trying to do what, and where it
+failed. Show the current baseline, so readers can judge whether this solution, or another one,
+improves on it.
 
-Link the original request and supporting evidence where useful. Separate observed behavior from
-reported experience or assumptions. Do not infer a failure from the proposed solution or borrow one
-from a reference example. The name of a requested feature is not a problem definition. For internal
-technical work, use the real caller or operator's difficulty rather than inventing a customer story.
+Link the original request and the evidence for it when they help. Keep what you observed separate
+from what people reported and from your own assumptions. Don't infer a failure from the proposed
+solution, and don't borrow one from a reference example. The name of a requested feature isn't a
+description of the problem. For internal technical work, describe the difficulty that the actual
+caller or operator has, and don't invent a customer story.
 
-End the section with the agreed outcome, which is one or two sentences that say what's true when
-the work is done.
+End the section with the agreed outcome, in one or two sentences that say what's true when the work
+is done.
 
 ## Appetite
 
-State how much change we're willing to take on to solve this problem and what that rules out.
-Explain whether the investment supports a small improvement to an existing workflow or a larger
-change, including the complexity we're willing to introduce for users and maintainers.
+State how much change we're willing to take on to solve the problem, and what the appetite rules
+out. Say whether the appetite allows a small improvement to an existing workflow or a larger change.
+Also say how much complexity we'll accept for users and maintainers.
 
-Record the boundary agreed with the user, not a newly invented estimate or deadline. Include a time
-budget if one was supplied. Do not turn willingness to invest into a premature choice of database
-schema, interface control, or implementation. If the candidate needs more investment, revisit the
-appetite rather than silently expanding it.
+Record the limit you agreed with the user, and don't invent a new estimate or deadline. Include a
+time budget if the user gave one. Don't turn the appetite into an early choice of database schema,
+interface control, or implementation. If the candidate needs more than the appetite allows, revisit
+the appetite with the user instead of quietly growing the work.
 
 ## Solution
 
-Present the main elements and how they connect, from the starting situation to a useful outcome.
-Explain where the change fits into the existing system and which existing behavior stays the same.
-Use a rough sketch, breadboard, or concrete example where it makes the idea easier to understand.
+Present the main elements and how they connect, from the starting situation to a useful result.
+Explain where the change fits in the existing system, and which existing behavior stays the same.
+Use a rough sketch, a breadboard, or a concrete example when it makes the idea easier to follow.
 
-Explain the trade-offs that make this solution fit the problem and appetite. Add enough context and
-labels for someone outside the conversation to follow it, without reproducing the whole discussion.
-Keep confirmed constraints explicit and show where designers and programmers still have choices.
-Number the main areas of the solution so the stories and the sketch can refer to them. Leave file
-inventories, speculative class hierarchies, and implementation task lists for later.
+Explain the trade-offs that make the solution fit the problem and the appetite. Label the parts,
+and add enough context for someone outside the conversation to follow them, but don't repeat the
+whole discussion. State the confirmed constraints, and show where designers and programmers can
+still make their own choices. Number the main areas of the solution, so the stories and the sketch
+can refer to them. Leave file lists, guessed class hierarchies, and implementation task lists for
+later.
 
 ## Stories
 
@@ -67,25 +70,21 @@ learn more.
 
 ## Rabbit holes
 
-Call out the traps that could derail this solution and the decisions that avoid them. Ground
-technical conclusions in the code, contracts, tests, or experiments actually examined. Include an
-exact detail when it closes a real rabbit hole. Otherwise, keep implementation choices open.
+Name the problems that could stall the work, and the decisions that avoid them. Base each technical
+conclusion on the code, contracts, tests, or experiments you actually examined. Include an exact
+detail when it closes a real rabbit hole, and otherwise leave implementation choices open.
 
-Do not hide a known feasibility gap under "implementation detail." For example, if an asynchronous
-operation requires a recovery path and that path is still unresolved, naming a queue does not solve
-it. Investigate the gap, simplify the solution, exclude the troublesome case if the solution still
-solves the problem without it, or leave the plan marked as a draft. An independent review provides
-advice, not proof of feasibility.
+Don't hide a known doubt about feasibility under "implementation detail." For example, if an
+asynchronous operation needs a way to recover from failure and nobody has settled how, naming a
+queue doesn't settle it. Investigate the gap, or simplify the solution. You can also leave out the
+case that causes the trouble, if the solution still solves the problem without it. Otherwise, keep
+the plan labeled as a draft. The Oracle's review is advice, and it isn't proof that the solution
+works.
 
 ## No-gos
 
-State the functionality and use cases deliberately excluded, and where the team should stop.
-Explain exclusions when their connection to the appetite or problem would otherwise be unclear.
-Do not quietly discard a confirmed requirement to make the proposal appear smaller.
-
-Keep the plan in the conversation unless the user requests a file or destination. A shaping-only
-request ends with the plan or an explanation of why the idea is not ready. The plan does not
-authorize publishing it, updating a ticket, or building it. If implementation was also requested,
-continue once the consequential choices are settled.
+List the features and use cases you left out on purpose, and say where the team should stop.
+Explain an exclusion when its link to the appetite or the problem isn't obvious. Don't quietly drop
+a confirmed requirement to make the proposal look smaller.
 
 Source: [Write the Pitch](https://basecamp.com/shapeup/1.5-chapter-06).
