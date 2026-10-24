@@ -19,14 +19,19 @@ behavior.
 Check the plan's assumptions against the code, contracts, or a quick experiment, and report
 anything that could invalidate the plan before you build on it. If the problem itself needs
 rethinking, go back to `shaping`. When the plan depends on how a library, a framework, or another
-service behaves, ask the Librarian instead of inferring it from local code. Orienting isn't an
-audit or an approval step, so start building once you can choose a first scope.
+service behaves, ask the researcher subagent instead of inferring it from local code. Orienting
+isn't an audit or an approval step, so start building once you can choose a first scope.
 
 ## Choose scopes
 
 Start with a small path through the middle of the system that works end to end and resolves an
 important unknown. Use the plan's stories as starting points. A scope usually covers one story or a
 few related ones, and each anti-story should end up as a test.
+
+Ask the planner subagent to map the first scope onto the code. Give it the plan as background, the
+scope to plan, and what is already settled, such as the outcome, the stories, and the appetite, and
+tell it not to plan later scopes. Ask it again when a later scope reaches code you haven't explored.
+Its steps are a starting point, and building the scope can change them.
 
 Draw each scope around an outcome you can integrate and verify on its own, not around layers,
 files, or people. Expect scopes to split, merge, and appear as you build, because the first map
@@ -91,7 +96,7 @@ When two attempts that share an assumption fail the same check, or when the same
 appears in several places, stop writing variations of the fix. Write down the assumption the
 attempts relied on, and check whether it holds in the running system or in the code that produces
 the input. Then fix the cause instead of adding code that compensates for its effect, and ask the
-Oracle subagent when a hard technical question remains open.
+reviewer subagent when a hard technical question remains open.
 
 Bring any consequential departure from the plan to the developer before you make it. Pause only the
 affected work, and present the evidence with a recommendation. When something has to give, cut
@@ -101,11 +106,10 @@ integrity.
 ## Review and finish
 
 Verify the integrated result with the repository's own checks, and exercise the changed behavior as
-close to the user or caller's entry point as the environment allows. When the user asks for
-end-to-end proof, or when unit and integration checks aren't enough to show that the change works
-and breaks nothing, use `proving-changes`. Then have the Oracle subagent review the result in a
-fresh context. Give it the outcome, the stories, the constraints, and what changed, but not the
-implementation conversation, and ask it to check the following:
+close to the user or caller's entry point as the environment allows. Then have the reviewer
+subagent review the result in a fresh context. Give it the outcome, the stories, the constraints,
+and the diff or branch to review, but not the implementation conversation. Don't tell it that the
+change works or what you expect it to find. Ask it to check the following:
 
 - Correctness, and whether the change follows the repository's guidance.
 - Fit with the surrounding design, and any complexity the change doesn't need.
@@ -115,6 +119,10 @@ The review has to cover the complete integrated result before you report the wor
 your own review doesn't replace it. Weigh each finding instead of accepting it automatically, and
 carry the supported fixes through the code, the checks, and a follow-up review without waiting for
 the user to ask.
+
+When the user asks for end-to-end proof, or when unit and integration checks aren't enough to show
+that the change works and breaks nothing, use `proving-changes` after the review's fixes are in, so
+the proof covers the final code. If the proof leads to a fix, ask the reviewer to review that fix.
 
 Keep choosing scopes until the work meets the agreed outcome, unless the user asked you to stop
 after one. The work is ready when it meets the outcome, not when every possible improvement is

@@ -78,8 +78,8 @@ Don't hide a known doubt about feasibility under "implementation detail." For ex
 asynchronous operation needs a way to recover from failure and nobody has settled how, naming a
 queue doesn't settle it. Investigate the gap, or simplify the solution. You can also leave out the
 case that causes the trouble, if the solution still solves the problem without it. Otherwise, keep
-the plan labeled as a draft. The Oracle's review is advice, and it isn't proof that the solution
-works.
+the plan labeled as a draft. The reviewer's findings are advice, and they aren't proof that the
+solution works.
 
 ## No-gos
 

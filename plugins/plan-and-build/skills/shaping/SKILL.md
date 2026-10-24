@@ -97,7 +97,7 @@ ways:
 - Cut the risky part, and list it as a no-go.
 
 When the solution depends on how a library, a framework, or another service behaves, ask the
-Librarian subagent instead of inferring it from local code.
+researcher subagent instead of inferring it from local code.
 
 If the core solution still depends on an open question, it isn't solved yet.
 
@@ -108,7 +108,7 @@ and write for a reader who wasn't part of the conversation.
 
 ## Review the plan adversarially
 
-Before you present the plan as solved, ask the Oracle subagent to try to break it. The Oracle
+Before you present the plan as solved, ask the reviewer subagent to try to break it. The reviewer
 starts in a fresh context, so it reads the plan the way an outside reader would. Give it the
 written plan and the paths of the files behind your evidence, but not the shaping conversation.
 Ask it to look for these holes:
@@ -121,11 +121,11 @@ Ask it to look for these holes:
 
 Weigh each finding against the evidence instead of accepting it automatically. Handle a supported
 finding like any other risk, and go back to the step it affects. When a fix changes the solution,
-the stories, or the appetite, ask the Oracle to review the revised plan. If a finding still
+the stories, or the appetite, ask the reviewer to review the revised plan. If a finding still
 threatens the core solution, label the plan **Draft** and name the open question.
 
 When you present the plan, list the findings that changed it and the ones you rejected, with a
-reason for each rejection. Oracle gives advice, and we make the decision.
+reason for each rejection. The reviewer gives advice, and we make the decision.
 
 Keep the plan in the conversation unless the user asks for a file or another destination. A request
 for shaping alone ends with the plan, or with an explanation of why the idea isn't ready. The plan
