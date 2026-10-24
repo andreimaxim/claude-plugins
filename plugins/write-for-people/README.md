@@ -1,22 +1,12 @@
 # write-for-people
 
-The write-for-people plugin helps Claude Code write text that people read, e.g. explanations of code, names in code, and prose such as documentation and pull request descriptions. It adds three skills. Claude loads a skill when a request matches its description, and you can also invoke one directly as `/write-for-people:<skill>`.
+The write-for-people plugin helps Claude Code write text that people read, such as explanations of code, names in code, and documentation or pull request descriptions.
 
 ## Skills
 
-- `explaining-code` explains how code works, why it was designed that way, and what a change does. It traces the actual code path, keeps what the code shows separate from what Claude infers, and shows changes as before and after drawings or diffs. Inspired by HumanLayer's [show-me](https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md) skill and the explaining-code skill in [Amp's official plugins](https://github.com/andreimaxim/amp-official-plugins/blob/main/skills/explaining-code/SKILL.md).
-- `naming-things` chooses names and terms for variables, functions, tables, endpoints, and domain concepts. It reads how a thing is defined and used before it suggests a name, and it renames only when you ask. Adapted from Koleman Nix's [How to name things](https://kolemannix.com/blog/how-to-name-things/).
-- `plain-writing` writes and edits prose in a plain style, with everyday words, complete sentences, no dashes, and no jargon. It doesn't apply to code.
-
-## Plain writing applies by default
-
-The `plain-writing` skill's description covers documents, READMEs, emails, commit messages, and pull request descriptions. Once the plugin is installed, Claude uses that style for most prose it writes for you, including when you only wanted `explaining-code` or `naming-things`. To turn it off, disable the plugin.
-
-To rewrite Claude's previous reply for a reader with no project context, run `/write-for-people:plain-writing deslopify`, or ask Claude to "deslopify" the reply.
-
-## What the plugin runs and fetches
-
-The plugin contains only instructions. It has no hooks, MCP servers, or scripts, and it doesn't change your permission settings. `explaining-code` reads code and git history, and it may read pull request discussions or tickets when your session has tools for them. An approved rename from `naming-things` edits files and runs the repository's checks. Each of these steps uses Claude Code's normal tools and permission prompts.
+- `explaining-code` explains how code works, why it was designed that way, and what a change does.
+- `naming-things` chooses names for code and domain concepts after it works out what each thing means and does.
+- `plain-writing` writes and edits prose in a plain style, and `/write-for-people:plain-writing deslopify` rewrites Claude's previous reply.
 
 ## Install
 
@@ -24,6 +14,10 @@ The plugin contains only instructions. It has no hooks, MCP servers, or scripts,
 claude plugin marketplace add andreimaxim/claude-plugins
 claude plugin install write-for-people@andreimaxim
 ```
+
+## Sources
+
+`explaining-code` is inspired by HumanLayer's [show-me](https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md) skill and the explaining-code skill in [Amp's official plugins](https://github.com/andreimaxim/amp-official-plugins/blob/main/skills/explaining-code/SKILL.md). `naming-things` is adapted from Koleman Nix's [How to name things](https://kolemannix.com/blog/how-to-name-things/).
 
 ## License
 
