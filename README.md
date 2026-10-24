@@ -6,7 +6,7 @@ Plugins that help software engineers work in Claude Code, such as planning and b
 
 | Plugin | Description |
 | :- | :- |
-| [plan-and-build](plugins/plan-and-build) | Shape work into bounded plans and implement them with independent review |
+| [plan-and-build](plugins/plan-and-build) | Shape a raw idea into a bounded plan, then implement it |
 | [write-for-people](plugins/write-for-people) | Explain code, choose names, and write plain prose for people to read |
 | [write-for-models](plugins/write-for-models) | Write and revise skills, system prompts, and other model instructions |
 

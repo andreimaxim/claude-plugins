@@ -1,7 +1,7 @@
 {
   "name": "plan-and-build",
   "version": "0.8.2",
-  "description": "Shape work into bounded plans and implement them with independent review",
+  "description": "Shape a raw idea into a bounded plan, then implement it",
   "author": {
     "name": "Andrei Maxim",
     "url": "https://github.com/andreimaxim"
