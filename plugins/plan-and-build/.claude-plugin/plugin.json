@@ -1,7 +1,8 @@
 {
   "name": "plan-and-build",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Shape a raw idea into a bounded plan, then implement it",
+  "icon": "./skills/shaping/assets/icon.png",
   "author": {
     "name": "Andrei Maxim",
     "url": "https://github.com/andreimaxim"

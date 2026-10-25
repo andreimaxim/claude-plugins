@@ -1,7 +1,8 @@
 {
   "name": "write-for-people",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Explain code, choose names, and write plain prose for people to read",
+  "icon": "./skills/plain-writing/assets/icon.png",
   "author": {
     "name": "Andrei Maxim",
     "url": "https://github.com/andreimaxim"
