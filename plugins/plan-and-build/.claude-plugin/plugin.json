@@ -1,6 +1,6 @@
 {
   "name": "plan-and-build",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Shape a raw idea into a bounded plan, then implement it",
   "author": {
     "name": "Andrei Maxim",

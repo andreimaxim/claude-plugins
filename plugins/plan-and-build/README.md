@@ -28,6 +28,25 @@ claude plugin marketplace add andreimaxim/claude-plugins
 claude plugin install plan-and-build@andreimaxim
 ```
 
+## Example prompts
+
+Use the prompts in a development checkout, and supply the plan or change each prompt refers to:
+
+- `/plan-and-build:shaping Our CSV export times out for large accounts. Shape a solution that keeps the current download format and doesn't add a new service.`
+- `/plan-and-build:implementing Implement the plan below. Keep the public API unchanged and verify each story with the repository's checks.`
+- `/plan-and-build:proving-changes Prove that the current export fix handles an empty account and a large account. Compare the base revision with the changed code using local test data.`
+- `/plan-and-build:organizing-commits Reorganize the current branch into reviewable commits without changing its final contents. Keep a backup and don't push.`
+
+## Tools and permissions
+
+The plugin contains Markdown instructions and reference files. It includes no hooks, executable scripts, MCP servers, package dependencies, or background services.
+
+When you use its skills, Claude can read project files and Git history, edit code, and run the project's builds and tests through the tools available in your session. The proving skill can start local services and collect screenshots, recordings, logs, and timings. The commit-organizing skill rewrites local Git history after saving a backup and leaves pushing to you.
+
+The researcher can clone the repositories relevant to your question, fetch their history, and read related issues, pull requests, and web documentation. It uses Git, optionally the GitHub CLI, and Claude's web tools. Private repository access uses your existing Git authentication. Remote requests go to the repository host, GitHub, or the sources relevant to the research. Research clones remain under `/tmp/claude-researcher/`, or `%TEMP%\claude-researcher\` on Windows, until you remove them.
+
+The skills require explicit approval for publishing, deploying, or writing to production. Claude Code's permissions and your project settings still apply to every tool call.
+
 ## Sources
 
 The `shaping` skill and its reference files are based on chapters of [37signals' Shape Up](https://basecamp.com/shapeup):
@@ -42,4 +61,4 @@ The `implementing` skill follows the building phase of [Shape Up](https://baseca
 
 ## License
 
-MIT, as set in the plugin's `plugin.json`.
+MIT. See [LICENSE](LICENSE), included in the plugin folder.

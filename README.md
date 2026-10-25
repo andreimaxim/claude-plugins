@@ -30,10 +30,12 @@ It's recommended to turn on auto-update, which is off by default for marketplace
 
 ## Develop
 
-Validate after every change:
+Validate the marketplace and each plugin after every change. Marketplace validation doesn't check the skills and agents inside the plugin folders:
 
 ```bash
-claude plugin validate .
+for path in . plugins/*; do
+  claude plugin validate "$path" --strict || exit 1
+done
 ```
 
 When you change a plugin, raise the `version` in its `plugin.json`, because users get a change only when the version changes.
