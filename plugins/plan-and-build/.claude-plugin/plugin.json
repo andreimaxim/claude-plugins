@@ -1,6 +1,6 @@
 {
   "name": "plan-and-build",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "Shape a raw idea into a bounded plan, then implement it",
   "icon": "./skills/shaping/assets/icon.png",
   "author": {
@@ -9,5 +9,5 @@
   },
   "repository": "https://github.com/andreimaxim/claude-plugins",
   "license": "MIT",
-  "keywords": ["planning", "shape-up", "implementation", "code-review", "research", "git", "commits"]
+  "keywords": ["planning", "shape-up", "implementation", "code-review", "audit", "security", "dependencies", "research", "git", "commits"]
 }

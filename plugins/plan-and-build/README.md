@@ -1,12 +1,12 @@
 # plan-and-build
 
-The plan-and-build plugin helps Claude Code turn a raw idea into working, reviewed code. It adds four skills and three subagents.
+The plan-and-build plugin helps Claude Code turn a raw idea into working, reviewed code. It adds five skills and three subagents.
 
 ## How it works
 
 You start with a raw idea, such as a feature request, a ticket, or a hard bug report. The `shaping` skill works through it with you until it becomes a plan that is ready to build. The plan covers the problem, the outcome, how much change you're willing to take on, the main parts of the solution, and the stories it has to support. Shaping is a conversation, so expect to go back and forth until the shape is right.
 
-Once you have the plan, run `implementing` with it, ideally in a new session so the work starts from the plan and not from the shaping conversation. Claude builds the plan in small pieces that each work end to end, checks them as it goes, and has the result reviewed before it reports the work as ready. When you need stronger evidence, `proving-changes` shows the change working, and `organizing-commits` prepares the branch for review.
+Once you have the plan, run `implementing` with it, ideally in a new session so the work starts from the plan and not from the shaping conversation. Claude builds the plan in small pieces that each work end to end, checks them as it goes, and has the result reviewed before it reports the work as ready. When you need stronger evidence, `proving-changes` shows the change working, and `organizing-commits` prepares the branch for review. For a change where a missed regression is expensive, such as a dependency upgrade that fixes a CVE, run `auditing-changes` yourself before it ships.
 
 ## Skills
 
@@ -14,6 +14,7 @@ Once you have the plan, run `implementing` with it, ideally in a new session so 
 - `implementing` builds an agreed plan in small verified pieces and reports how each story was verified.
 - `proving-changes` shows with before and after evidence that a change works and breaks nothing.
 - `organizing-commits` reorganizes a branch into commits that are easy to review and that each pass the checks.
+- `auditing-changes` checks every line of a high-stakes change, such as a security upgrade of a dependency, and reports whether it can ship without regressions. Claude never loads it on its own, so you start it with `/plan-and-build:auditing-changes`.
 
 ## Subagents
 
@@ -36,12 +37,13 @@ Use the prompts in a development checkout, and supply the plan or change each pr
 - `/plan-and-build:implementing Implement the plan below. Keep the public API unchanged and verify each story with the repository's checks.`
 - `/plan-and-build:proving-changes Prove that the current export fix handles an empty account and a large account. Compare the base revision with the changed code using local test data.`
 - `/plan-and-build:organizing-commits Reorganize the current branch into reviewable commits without changing its final contents. Keep a backup and don't push.`
+- `/plan-and-build:auditing-changes Upgrade rack to the release that fixes its latest CVE. Tell me whether we can ship it without regressions.`
 
 ## Tools and permissions
 
 The plugin contains Markdown instructions and reference files. It includes no hooks, executable scripts, MCP servers, package dependencies, or background services.
 
-When you use its skills, Claude can read project files and Git history, edit code, and run the project's builds and tests through the tools available in your session. The proving skill can start local services and collect screenshots, recordings, logs, and timings. The commit-organizing skill rewrites local Git history after saving a backup and leaves pushing to you.
+When you use its skills, Claude can read project files and Git history, edit code, and run the project's builds and tests through the tools available in your session. The proving skill can start local services and collect screenshots, recordings, logs, and timings. The commit-organizing skill rewrites local Git history after saving a backup and leaves pushing to you. The auditing skill runs upgrades, builds, and tests in a separate Git worktree and leaves your checkout unchanged. For a dependency upgrade, it downloads the released packages of both versions from the package registry and clones the library's source.
 
 The researcher can clone the repositories relevant to your question, fetch their history, and read related issues, pull requests, and web documentation. It uses Git, optionally the GitHub CLI, and Claude's web tools. Private repository access uses your existing Git authentication. Remote requests go to the repository host, GitHub, or the sources relevant to the research. Research clones remain under `/tmp/claude-researcher/`, or `%TEMP%\claude-researcher\` on Windows, until you remove them.
 
