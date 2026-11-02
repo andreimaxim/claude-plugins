@@ -1,6 +1,7 @@
 MIT License
 
 Copyright (c) 2026 Andrei Maxim
+Copyright (c) 2026 Shreya Shankar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +23,10 @@ SOFTWARE.
 
 ---
 
-The license above does not apply to the plain-writing skill in
-skills/plain-writing/. The plain-writing skill is
-copyright (c) 2026 Shreya Shankar, and it is licensed under the MIT license in
-skills/plain-writing/LICENSE.
+The MIT license above covers the plugin's original material and the writing
+rules adapted from docwriter-org/plain-writing-skill.
+
+The article text and transcribed figures in plain-writing remain
+attributed to Shreya Shankar. The article's source repository has no license
+file, and the license above does not relicense that material. See README.md
+for source attribution.

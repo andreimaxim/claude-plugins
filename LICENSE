@@ -22,7 +22,14 @@ SOFTWARE.
 
 ---
 
-The license above does not apply to the plain-writing skill in
-plugins/write-for-people/skills/plain-writing/. The plain-writing skill is
-copyright (c) 2026 Shreya Shankar, and it is licensed under the MIT license in
-plugins/write-for-people/skills/plain-writing/LICENSE.
+The license above covers this repository's original material, not the
+third-party material described below.
+
+The original writing rules included in plain-writing are copyright (c) 2026
+Shreya Shankar. Their MIT notice is included in
+plugins/write-for-people/LICENSE.
+
+The article text and transcribed figures in plain-writing remain
+attributed to Shreya Shankar. The article's source repository has no license
+file, and the license above does not relicense that material. See
+plugins/write-for-people/README.md for source attribution.
