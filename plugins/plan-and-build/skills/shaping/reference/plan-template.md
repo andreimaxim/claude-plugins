@@ -5,9 +5,9 @@ reader who wasn't part of the shaping conversation should be able to understand 
 proposal from the plan alone. Keep the shape you agreed on, and don't add new decisions while you
 write.
 
-If the appetite, a design choice that would change the solution, or a doubt about whether the
-solution can work still blocks the shape, label the plan **Draft** and say what has to be settled.
-Having all six headings doesn't make the work solved. Keep these blockers apart from the ordinary
+If the appetite is unsettled, or a behavior, design, or feasibility question could change the
+agreed outcome, core solution, or appetite, label the plan **Draft** and say what has to be settled.
+Having all six headings doesn't make the work solved. Keep those blockers apart from the ordinary
 implementation choices that you leave to the team on purpose.
 
 ## Problem
@@ -60,13 +60,30 @@ the reader can see where the work is. For example:
 3. An API client polls the job until the file is ready. New.
 4. An API client downloads the file through the existing signed URL. As before.
 
-Then list the anti-stories, and mark each one with ✗. For example:
+Connect the rules and examples to the stories they clarify. Record a shared rule once and refer
+to it from the affected stories. Include enough examples to distinguish the interpretations that
+affected the solution, rather than an exhaustive test matrix.
 
-- ✗ A retried request creates a second export.
-- ✗ A client downloads another account's export.
+For example, story 1 might have the following agreed behavior:
 
-Implementation starts from the list, and the team can change the stories or their order as they
-learn more.
+- Rule: A retry of the same export request returns the existing job without creating another.
+- Example: The server creates job E, but the response is lost. The client retries and receives E's
+  identifier, and no additional job is created.
+- Anti-story: ✗ A retried request creates a second export.
+
+List the anti-stories with ✗ and connect each one to the relevant stories or examples. They forbid
+outcomes within supported behavior, while excluded features belong in No-gos. For story 4, another
+anti-story could be "✗ A client downloads another account's export."
+
+Keep unconfirmed outcomes labeled as proposals, and list unanswered questions separately from the
+agreed rules and examples. For the retry example, an open question might be how to distinguish a
+retry from a new request, or what should happen for simultaneous requests. Say what decision each
+question affects and who or what can answer it, if known. Carry questions that could change the
+shape into Rabbit holes.
+
+Implementation derives runnable tests from the agreed behavior. The team can refine the stories,
+examples, and their order as it learns more, but changes to agreed outcomes need the user's
+agreement.
 
 ## Rabbit holes
 

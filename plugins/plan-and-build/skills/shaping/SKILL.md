@@ -42,6 +42,24 @@ structured data that people can filter and report on. Don't pick database column
 When a good idea exceeds the appetite, narrow the idea or revisit the appetite with the user,
 instead of quietly growing the work.
 
+Before choosing a solution, start the stories. A story is one sentence that says who or what acts
+and what they can do. For internal work, the actor may be a developer or an operator. Use Example
+Mapping within the conversation to clarify ambiguous behavior. A rule states a condition or
+constraint on the behavior. An example gives a concrete starting situation, an action, and an
+observable expected result.
+
+Develop examples together with the user. Propose cases and expected outcomes using the request
+and confirmed contracts, and build on examples the user brings. Vary the cases to explore
+boundaries and interactions, explaining which rule or assumption each variation tests. Use the
+discussion to refine both the rules and the examples.
+
+Keep proposed outcomes distinct from agreed behavior, and don't assume current behavior is
+intended. If an answer is unknown, keep the question visible and note what decision it affects.
+
+Use enough examples to settle behavior that could change the solution or its scope, rather than
+enumerating every combination. Leave runnable test lists and predictive TDD cycles to implementation.
+Refine the stories, rules, and examples while exploring candidates.
+
 For help narrowing a request, read the [dot calendar case study](reference/dot-calendar.md).
 
 ## Find the elements
@@ -63,34 +81,34 @@ Number the main areas of the solution, so the plan and the stories can refer to 
 
 ## Check the solution with stories
 
-Write the stories the solution has to support. A story is one sentence that says who or what acts
-and what they can do, e.g., "An API client can poll the export until the file is ready." For
-internal work, the actor is often a developer or an operator, e.g., "A developer can add a payment
-provider without changing the checkout code." Each story follows a path through the breadboard,
-from where it starts to where it ends.
+Follow each story through the breadboard, from where it starts to where the actor gets a useful
+result, e.g., "An API client can poll the export until the file is ready." Put the stories in the
+order of the flow, and keep the list to nine or fewer. If you need more, group them. Connect the
+rules and examples to the stories they clarify, without repeating shared rules under every story.
 
-Then write the anti-stories, which describe what must not happen, and mark each one with ✗, e.g.,
-"✗ A retried request creates a second export." Put all the stories in the order of the flow, and
-keep the list to nine or fewer. If you need more, group them.
+Write the anti-stories, which describe what must not happen within supported behavior, and mark
+each one with ✗, e.g., "✗ A retried request creates a second export." Connect them to the relevant
+stories and examples too. Features excluded from the scope belong in No-gos, not in anti-stories.
 
-Check each candidate solution against the same stories, and drop any candidate that allows an
-anti-story. When a connection in the breadboard has no story running along it, either a story is
-missing or the connection isn't needed.
+Check each candidate solution against the same stories, rules, and agreed examples, and drop any
+candidate that allows an anti-story. When a connection in the breadboard has no story running
+along it, either a story is missing or the connection isn't needed.
 
-Move on when one solution supports every story and allows no anti-story.
+Move on when one solution supports every story and its agreed examples without allowing an
+anti-story. Carry unanswered questions into the risk check rather than treating them as settled.
 
 ## Find risks and rabbit holes
 
-Walk through each story, and ask these questions:
+Walk through each story and its unanswered questions, and ask:
 
 - Does it need technical work we've never done?
-- Are we assuming how the parts fit together?
+- Are we assuming a rule or how the parts fit together?
 - Are we assuming a design solution exists that we haven't found?
 - Is there a hard decision we could settle now?
 
-Check each assumption against the code, contracts, tests, or a small experiment that the user
-approved, because a plausible explanation isn't evidence. Then deal with each risk in one of these
-ways:
+Check technical assumptions against the code, contracts, tests, or a small experiment that the
+user approved, because a plausible explanation isn't evidence. Resolve uncertain business behavior
+with the user. Then deal with each risk in one of these ways:
 
 - Resolve it with evidence.
 - Settle a simpler answer now, even if it's less elegant.
@@ -99,7 +117,8 @@ ways:
 When the solution depends on how a library, a framework, or another service behaves, ask the
 researcher subagent instead of inferring it from local code.
 
-If the core solution still depends on an open question, it isn't solved yet.
+If an open question could change the agreed outcome, core solution, or appetite, the plan isn't
+solved yet. Keep those blockers separate from ordinary implementation choices left open on purpose.
 
 ## Write the plan
 
@@ -113,15 +132,15 @@ starts in a fresh context, so it reads the plan the way an outside reader would.
 written plan and the paths of the files behind your evidence, but not the shaping conversation.
 Ask it to look for these holes:
 
-- A story the solution doesn't support, or an anti-story it allows.
-- A claim about the code, a contract, or a dependency that the evidence doesn't support.
+- A story or agreed example the solution doesn't support, or an anti-story it allows.
+- A rule, expected result, or technical claim that the agreement or evidence doesn't support.
 - A path that stops before the actor gets a useful result.
 - A rabbit hole the plan doesn't name, or work that goes beyond the appetite.
 - A part that a reader can't follow without the shaping conversation.
 
 Weigh each finding against the evidence instead of accepting it automatically. Handle a supported
 finding like any other risk, and go back to the step it affects. When a fix changes the solution,
-the stories, or the appetite, ask the reviewer to review the revised plan. If a finding still
+the agreed behavior, or the appetite, ask the reviewer to review the revised plan. If a finding still
 threatens the core solution, label the plan **Draft** and name the open question.
 
 When you present the plan, list the findings that changed it and the ones you rejected, with a
