@@ -69,9 +69,11 @@ test, look at the responsibility and dependency boundaries before you reach for 
 
 As soon as the flow is concrete enough to judge, step back and look at the new code and its
 surroundings as one design, before you repeat the design across the rest of the work. Integrate a
-new requirement as if the design had always included it, instead of adding a special case to the
-existing flow. Assume the next person or agent who edits the code will read only the file they
-open, copy the nearest example, and take the shortest path that works:
+new requirement as if the design had always included it, reconsidering responsibilities and
+interfaces instead of adding a special case to the existing flow. Judge simplicity across the
+operation and its callers, not by code size or object count. Assume the next person or agent who
+edits the code will read only the file they open, copy the nearest example, and take the shortest
+path that works:
 
 - Give each piece of state and each business rule one owner, so callers send a message to the
   owner instead of updating the same state or repeating the same rule in several places.
@@ -95,8 +97,14 @@ enforce the rule in the object's interface, a test, or a check if you can.
 When two attempts that share an assumption fail the same check, or when the same workaround
 appears in several places, stop writing variations of the fix. Write down the assumption the
 attempts relied on, and check whether it holds in the running system or in the code that produces
-the input. Then fix the cause instead of adding code that compensates for its effect, and ask the
-reviewer subagent when a hard technical question remains open.
+the input. Use the evidence to choose a fix, and ask the reviewer subagent when a hard technical
+question remains open.
+
+When callers compensate for another component's implementation, trace the requirement to its
+source. Distinguish a required domain rule or external constraint from an avoidable implementation
+choice. Prefer fixing the cause within the agreed scope rather than repeating the workaround.
+When compatibility or an external dependency prevents that, contain the workaround with the
+responsibility that owns the operation and make any remaining limitation explicit to callers.
 
 Bring any consequential departure from the plan to the developer before you make it. Pause only the
 affected work, and present the evidence with a recommendation. When something has to give, cut

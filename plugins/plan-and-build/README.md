@@ -60,7 +60,9 @@ The shaping skill's use of rules, concrete examples, and open questions draws on
 
 The `planner`, `reviewer`, and `researcher` subagents are adapted from Amp's planning, reviewing, and researching subagent skills.
 
-The `implementing` skill follows the building phase of [Shape Up](https://basecamp.com/shapeup/3.0-chapter-10) and draws on engineering principles from Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack). The `proving-changes` skill is adapted from the skill of the same name in [Amp's official plugins](https://github.com/ampcode/official-plugins/blob/main/skills/proving-changes/SKILL.md), and its benchmarking section draws on `pstack`'s [benchmark-checklist](https://github.com/cursor/plugins/blob/main/pstack/skills/benchmark-checklist/SKILL.md), which is based on Brendan Gregg's benchmarking checklist.
+The `implementing` skill follows the building phase of [Shape Up](https://basecamp.com/shapeup/3.0-chapter-10) and draws on engineering principles from Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack). Its guidance on caller workarounds and required complexity draws on Bryan Cantrill's [Execution in the Kingdom of Agents: Reflections on Abstraction and Complexity](https://speakerdeck.com/bcantrill/execution-in-the-kingdom-of-agents-reflections-on-abstraction-and-complexity), presented at Monktoberfest 2026.
+
+The `proving-changes` skill is adapted from the skill of the same name in [Amp's official plugins](https://github.com/ampcode/official-plugins/blob/main/skills/proving-changes/SKILL.md), and its benchmarking section draws on `pstack`'s [benchmark-checklist](https://github.com/cursor/plugins/blob/main/pstack/skills/benchmark-checklist/SKILL.md), which is based on Brendan Gregg's benchmarking checklist.
 
 ## License
 
