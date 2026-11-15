@@ -90,9 +90,14 @@ You can change how the plan organizes the code, but not the agreed outcome.
 Refactor in small steps that keep behavior the same, with checks in place for the behavior you're
 preserving. Keep refactoring separate from behavior changes, and leave unrelated cleanup alone.
 Check why an existing guard, branch, or comment was added before you delete it, so you don't remove
-intentional behavior. Remove comments that only narrate the code, and keep the ones that explain a
-reason or an external constraint. When a comment warns callers about a rule they have to remember,
-enforce the rule in the object's interface, a test, or a check if you can.
+intentional behavior.
+
+Do not add explanatory code comments unless the user explicitly requests them. Express intent
+through names and interfaces. Enforce rules in code and cover them with tests. Preserve required
+legal notices and comments interpreted by runtimes or tools.
+
+A comment is not a substitute for fixing an implementation problem. When a constraint prevents
+the fix, report the constraint and remaining limitation to the user.
 
 When two attempts that share an assumption fail the same check, or when the same workaround
 appears in several places, stop writing variations of the fix. Write down the assumption the
