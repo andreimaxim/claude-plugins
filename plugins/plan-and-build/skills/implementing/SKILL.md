@@ -11,27 +11,27 @@ scopes come out of the work instead of a task list made up front.
 
 ## Orient
 
-Start from the plan or brief the user agreed to, and note the outcome, the stories, the boundaries,
-and any open decisions. Then follow the entry point to the code that owns the rules, and use the
-repository's guidance and similar flows to tell the intended design apart from accidental legacy
-behavior.
+Start from the plan or brief the user agreed to, and note the outcome, the appetite, the stories,
+the no-gos, and any open decisions. Follow the entry point to the code that owns the rules, and use
+the repository's guidance and similar flows to tell the intended design apart from accidental
+legacy behavior.
 
 Check the plan's assumptions against the code, contracts, or a quick experiment, and report
-anything that could invalidate the plan before you build on it. If the problem itself needs
-rethinking, go back to `shaping`. When the plan depends on how a library, a framework, or another
-service behaves, ask the researcher subagent instead of inferring it from local code. Orienting
-isn't an audit or an approval step, so start building once you can choose a first scope.
+anything that could invalidate the plan or exceed the appetite before you build on it. If the
+problem itself needs rethinking, go back to `shaping`. When the plan depends on how a library,
+framework, or external service behaves, ask the `researcher` subagent instead of inferring it from
+local code. Start building once you can choose a first scope.
 
 ## Choose scopes
 
 Start with a small path through the middle of the system that works end to end and resolves an
 important unknown. Use the plan's stories as starting points. A scope usually covers one story or a
-few related ones, and each anti-story should end up as a test.
+few related ones, and each anti-story becomes a test.
 
-Ask the planner subagent to map the first scope onto the code. Give it the plan as background, the
-scope to plan, and what is already settled, such as the outcome, the stories, and the appetite, and
-tell it not to plan later scopes. Ask it again when a later scope reaches code you haven't explored.
-Its steps are a starting point, and building the scope can change them.
+Ask the `planner` subagent to map the first scope onto the code. Give it the plan as background,
+the scope to plan, and what is already settled, such as the outcome, the stories, and the appetite,
+and tell it not to plan later scopes. Ask it again when a later scope reaches code you haven't
+explored.
 
 Draw each scope around an outcome you can integrate and verify on its own, not around layers,
 files, or people. Expect scopes to split, merge, and appear as you build, because the first map
@@ -41,107 +41,98 @@ Track each scope as unknown, understood, or verified. Understood means you can s
 it, and verified means the integrated behavior works. New evidence can move a scope back, and
 effort spent doesn't count as progress. Tell the user when the map changes in a way that matters.
 
-## Build
+## Build each scope
 
-Before you write the internals of a class, module, or function, start from how callers will use
-it, including what objects exist, what messages callers send them, and what comes back. Give each
-object one clear responsibility and a small public interface that completes the operation, instead
-of making callers coordinate internal steps or change its state directly. Put domain rules in the
-objects and data structures that own them, rather than scattering boolean flags and `if` or `case`
-branches across callers, or splitting one concept across procedural steps such as load, validate,
-transform, and save.
+Design each class, module, or function from how callers use it. Decide what objects exist, what
+messages callers send them, and what comes back. Prefer small objects that collaborate through
+messages over deep inheritance trees, and use inheritance only when a subclass can stand in for its
+parent everywhere. Validate and normalize untrusted input where it enters the system, so internal
+objects can trust the values and collaborators handed to them instead of repeating format and nil
+checks.
 
-Prefer small objects that play a clear role and collaborate through messages over deep inheritance
-trees. Use inheritance only when a subclass can stand in for its parent everywhere without callers
-checking its class or overriding parent behavior in incompatible ways. Validate and normalize
-untrusted input where it enters the system, such as controller parameters, CLI arguments, webhook
-payloads, or external API responses, so objects inside the system can trust the values and
-collaborators handed to them instead of repeating nil and format checks everywhere.
+Build the smallest end-to-end path that produces the scope's visible result for today's
+requirements, and run focused checks as you go. Write tests that specify the system's intended
+behavior and state directly, rather than framing assertions around how it behaved before the
+change. Exercise the public interface the way a caller does, and assert concrete expected values
+and state changes rather than only checking that a value exists or a method was called. Because a
+test is a caller of the public interface, a test that is hard to write or needs elaborate setup and
+mocks shows that the public API itself isn't well thought out. Improve the interface and
+responsibilities instead of working around them in the test.
 
-Build the smallest end-to-end path that produces the scope's visible result, for today's
-requirements rather than imagined ones. For each behavior change, write a test or check that fails
-on the old behavior and passes on the new one, and run focused checks as you go. Send the same
-messages a caller sends through the public interface, and compare the returned value, the state
-change, or the arguments of an outgoing command to a concrete expected result. Don't keep a test
-that only checks whether a value is present or whether a method was called without checking its
-arguments, or that computes the expected value with the code under test. If the behavior is hard to
-test, look at the responsibility and dependency boundaries before you reach for elaborate mocks.
+## Refine the design
 
 As soon as the flow is concrete enough to judge, step back and look at the new code and its
-surroundings as one design, before you repeat the design across the rest of the work. Integrate a
-new requirement as if the design had always included it, reconsidering responsibilities and
-interfaces instead of adding a special case to the existing flow. Judge simplicity across the
-operation and its callers, not by code size or object count. Assume the next person or agent who
-edits the code will read only the file they open, copy the nearest example, and take the shortest
-path that works:
+surroundings as one design before repeating it across the rest of the work. Integrate a new
+requirement as if the design had always included it, reconsidering responsibilities and interfaces
+instead of adding a special case. Judge simplicity across the operation and its callers, not by
+code size or object count. Assume the next person or agent who edits the code will read only the
+file they open, copy the nearest example, and take the shortest path that works:
 
-- Give each piece of state and each business rule one owner, so callers send a message to the
-  owner instead of updating the same state or repeating the same rule in several places.
+- Give each piece of state and each domain rule one owner with a small public interface that
+  completes the operation, rather than making callers coordinate internal steps or scattering flags
+  and branches across callers.
 - Keep internal methods, helpers, and collaborators private to the object or module that owns
   them, and inline wrappers that only forward arguments without changing the abstraction.
-- When a scope replaces an internal method or object and all its callers can change together
-  without a compatibility requirement, update the callers and delete the old path in the same
-  scope so nobody copies it later.
+- When a scope replaces an internal method or object and all its callers can change together,
+  update the callers and delete the old path in the same scope so nobody copies it later.
 - Keep each list of valid states or options in one place, and derive other uses from it or check
-  them in a test, so a change in one file can't silently miss another file.
+  them in a test.
 
 You can change how the plan organizes the code, but not the agreed outcome.
 
-Refactor in small steps that keep behavior the same, with checks in place for the behavior you're
-preserving. Keep refactoring separate from behavior changes, and leave unrelated cleanup alone.
-Check why an existing guard, branch, or comment was added before you delete it, so you don't remove
-intentional behavior.
+Refactor in small steps that keep behavior the same, separate from behavior changes, and leave
+unrelated cleanup alone. Check why an existing guard, branch, or comment was added before deleting
+it.
 
 Do not add explanatory code comments unless the user explicitly requests them. Express intent
 through names and interfaces. Enforce rules in code and cover them with tests. Preserve required
 legal notices and comments interpreted by runtimes or tools.
 
-A comment is not a substitute for fixing an implementation problem. When a constraint prevents
-the fix, report the constraint and remaining limitation to the user.
+A comment is not a substitute for fixing an implementation problem. When a constraint prevents the
+fix, report the constraint and remaining limitation to the user.
 
-When two attempts that share an assumption fail the same check, or when the same workaround
-appears in several places, stop writing variations of the fix. Write down the assumption the
-attempts relied on, and check whether it holds in the running system or in the code that produces
-the input. Use the evidence to choose a fix, and ask the reviewer subagent when a hard technical
-question remains open.
+## Handle blockers and plan changes
 
-When callers compensate for another component's implementation, trace the requirement to its
-source. Distinguish a required domain rule or external constraint from an avoidable implementation
-choice. Prefer fixing the cause within the agreed scope rather than repeating the workaround.
-When compatibility or an external dependency prevents that, contain the workaround with the
-responsibility that owns the operation and make any remaining limitation explicit to callers.
+If a fix doesn't work, stop guessing variations of it. Inspect the running system or the code that
+produces the input to find out which assumption was wrong before trying another change. Ask the
+`reviewer` subagent when a hard technical question remains open.
 
-Bring any consequential departure from the plan to the developer before you make it. Pause only the
-affected work, and present the evidence with a recommendation. When something has to give, cut
-flexible breadth or generality first, and never cut required behavior, quality, security, or data
-integrity.
+When callers compensate for another component's implementation, trace the requirement to its source
+and distinguish a required domain rule or external constraint from an avoidable implementation
+choice. Fix the cause within the agreed appetite rather than repeating the workaround. When
+compatibility or an external dependency prevents fixing the cause, contain the workaround inside
+the component that owns the operation and make any remaining limitation explicit to callers.
+
+Bring any consequential departure from the plan or appetite to the user before making it. Pause
+only the affected work, and present the evidence with a recommendation. When something has to give,
+cut flexible breadth or generality first, and never cut required behavior, quality, security, or
+data integrity.
 
 ## Review and finish
 
 Verify the integrated result with the repository's own checks, and exercise the changed behavior as
-close to the user or caller's entry point as the environment allows. Then have the reviewer
+close to the user or caller's entry point as the environment allows. Then have the `reviewer`
 subagent review the result in a fresh context. Give it the outcome, the stories, the constraints,
-and the diff or branch to review, but not the implementation conversation. Don't tell it that the
-change works or what you expect it to find. Ask it to check the following:
+and the diff or branch to review, without the implementation conversation, and ask it to check:
 
 - Correctness, and whether the change follows the repository's guidance.
 - Fit with the surrounding design, and any complexity the change doesn't need.
 - Whether the tests prove the required behavior.
 
-The review has to cover the complete integrated result before you report the work as ready, and
-your own review doesn't replace it. Weigh each finding instead of accepting it automatically, and
-carry the supported fixes through the code, the checks, and a follow-up review without waiting for
-the user to ask.
+The review must cover the complete integrated result before you report the work as ready, and your
+own review doesn't replace it. Weigh each finding instead of accepting it automatically, and carry
+supported fixes through the code, the checks, and a follow-up review without waiting for the user
+to ask.
 
 When the user asks for end-to-end proof, or when unit and integration checks aren't enough to show
-that the change works and breaks nothing, use `proving-changes` after the review's fixes are in, so
-the proof covers the final code. If the proof leads to a fix, ask the reviewer to review that fix.
+that the change works and breaks nothing, use `proving-changes` after the review's fixes are in. If
+the proof leads to a fix, ask the reviewer to review that fix.
 
 Keep choosing scopes until the work meets the agreed outcome, unless the user asked you to stop
 after one. The work is ready when it meets the outcome, not when every possible improvement is
 done.
 
-When you report, go through the plan's stories. Say which ones work and how you verified them, mark
-each one as new, changed, or as before, and name the test for each anti-story. Then list any
-remaining limits or blockers. Being ready doesn't mean you can push, deploy, release, or write to
-production without explicit approval.
+When you report, go through the plan's stories and anti-stories. Mark each story as `New`,
+`Changed`, or `As before`, and say how you verified it. Name the test that covers each anti-story,
+and list any remaining limits or blockers. Being ready doesn't authorize pushing, deploying,
+releasing, or writing to production without explicit approval.

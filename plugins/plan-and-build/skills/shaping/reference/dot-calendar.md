@@ -24,9 +24,7 @@ against.
 ## Fit the elements to the appetite
 
 In the book, the team was willing to spend one six-week cycle on an improvement, but not six months
-on a full calendar. The six weeks were the appetite for this example, and they aren't a default time
-budget for other projects. In this skill, find out how much change the user is willing to take on,
-and use a time budget when the user gives one.
+on a full calendar.
 
 The resulting concept had three connected elements:
 
