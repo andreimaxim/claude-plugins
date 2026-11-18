@@ -1,6 +1,6 @@
 # plan-and-build
 
-The plan-and-build plugin helps Claude Code turn a raw idea into working, reviewed code. It adds four skills and three subagents.
+The plan-and-build plugin helps Claude Code turn a raw idea into working, reviewed code. It adds four skills and four subagents.
 
 ## How it works
 
@@ -17,9 +17,10 @@ Once you have the plan, run `implementing` with it, ideally in a new session so 
 
 ## Subagents
 
-- `planner` maps part of a plan onto the code and returns the steps to build it.
+- `builder` implements or refactors one scope of a plan at a time and verifies it with tests.
 - `reviewer` reviews a change, a plan, or a design as a skeptic and reports what should block it. It needs access to the Fable model.
 - `researcher` answers questions about dependencies and other repositories by reading their source.
+- `profiler` benchmarks a performance change or compares implementation options and profiles what limits performance next.
 
 ## Install
 
@@ -41,7 +42,7 @@ Use the prompts in a development checkout, and supply the plan or change each pr
 
 The plugin contains Markdown instructions and reference files. It includes no hooks, executable scripts, MCP servers, package dependencies, or background services.
 
-When you use its skills, Claude can read project files and Git history, edit code, and run the project's builds and tests through the tools available in your session. The proving skill can start local services and collect screenshots, recordings, logs, and timings. The commit-organizing skill rewrites local Git history after saving a backup and leaves pushing to you.
+When you use its skills, Claude can read project files and Git history, edit code, and run the project's builds and tests through the tools available in your session. The proving skill can start local services and collect screenshots, recordings, logs, and timings, and the profiler can build and run before and after benchmarks and profilers in temporary worktrees. The commit-organizing skill rewrites local Git history after saving a backup and leaves pushing to you.
 
 The researcher can clone the repositories relevant to your question, fetch their history, and read related issues, pull requests, and web documentation. It uses Git, optionally the GitHub CLI, and Claude's web tools. Private repository access uses your existing Git authentication. Remote requests go to the repository host, GitHub, or the sources relevant to the research. Research clones remain under `/tmp/claude-researcher/`, or `%TEMP%\claude-researcher\` on Windows, until you remove them.
 
@@ -58,11 +59,11 @@ The `shaping` skill and its reference files are based on chapters of [37signals'
 The shaping skill's use of rules, concrete examples, and open questions draws on Matt Wynne's
 [Example Mapping](https://cucumber.io/blog/bdd/example-mapping-introduction).
 
-The `planner`, `reviewer`, and `researcher` subagents are adapted from Amp's planning, reviewing, and researching subagent skills.
+The `reviewer` and `researcher` subagents are adapted from Amp's reviewing and researching subagent skills.
 
-The `implementing` skill follows the building phase of [Shape Up](https://basecamp.com/shapeup/3.0-chapter-10) and draws on engineering principles from Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack). Its guidance on caller workarounds and required complexity draws on Bryan Cantrill's [Execution in the Kingdom of Agents: Reflections on Abstraction and Complexity](https://speakerdeck.com/bcantrill/execution-in-the-kingdom-of-agents-reflections-on-abstraction-and-complexity), presented at Monktoberfest 2026.
+The `implementing` skill and `builder` subagent follow the building phase of [Shape Up](https://basecamp.com/shapeup/3.0-chapter-10) and draw on engineering principles from Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack). Their guidance on caller workarounds and required complexity draws on Bryan Cantrill's [Execution in the Kingdom of Agents: Reflections on Abstraction and Complexity](https://speakerdeck.com/bcantrill/execution-in-the-kingdom-of-agents-reflections-on-abstraction-and-complexity), presented at Monktoberfest 2026.
 
-The `proving-changes` skill is adapted from the skill of the same name in [Amp's official plugins](https://github.com/ampcode/official-plugins/blob/main/skills/proving-changes/SKILL.md), and its benchmarking section draws on `pstack`'s [benchmark-checklist](https://github.com/cursor/plugins/blob/main/pstack/skills/benchmark-checklist/SKILL.md), which is based on Brendan Gregg's benchmarking checklist.
+The `proving-changes` skill is adapted from the skill of the same name in [Amp's official plugins](https://github.com/ampcode/official-plugins/blob/main/skills/proving-changes/SKILL.md), and the `profiler` subagent draws on `pstack`'s [benchmark-checklist](https://github.com/cursor/plugins/blob/main/pstack/skills/benchmark-checklist/SKILL.md), which is based on Brendan Gregg's benchmarking checklist.
 
 ## License
 
