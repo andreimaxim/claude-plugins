@@ -53,7 +53,7 @@ After: The scores barely moved, so we can skip the model on most documents.
 
 Use one word for each concept throughout the artifact. If a concept is an
 "issue", don't also call it a "page". Consistent terminology keeps readers from
-having to decide whether different words mean the same thing.[^7]
+having to decide whether different words mean the same thing.
 
 Before: Upload the document. The file is parsed, and the record is saved.
 
@@ -96,12 +96,13 @@ After: # Iterative refinement using development disagreements
 Use verbs that make the sentiment clear. For customer complaints, use
 clearly negative verbs like "complain". For praise, use clearly positive verbs
 like "love". Readers who skim can then tell whether an item describes praise or
-a problem from the verb alone.[^13]
+a problem from the verb alone.
 
-In the [user feedback example](#user-feedback-themes), the original chess
-summary starts with "Chess is a popular new draw", even though most of the
-summary lists complaints. The rewrite begins "Users enjoy the new courses but
-complain about problems", so the opening reflects the mixed feedback.
+Before: Chess is a popular new draw, though users report a checkmate rule that
+seems wrong and no way for skilled players to skip ahead.
+
+After: Users enjoy the new chess course, but complain about a checkmate rule
+that seems wrong and no way to skip ahead.
 
 ## Sentences and paragraphs
 
@@ -127,46 +128,28 @@ verb in the tense that best matches the reader's expectations, e.g., a
 continuous form for an active session.
 
 English readers often take the first noun as the subject, the next verb as its
-action, and the next noun as its object.[^1] A misleading opening can make
-readers go back and parse the sentence again.[^2] For example, "The agent fixed
-the login bug" identifies the actor before the action. "Login bug fixed by the
-agent" delays the actor until the end.
+action, and the next noun as its object. A misleading opening can make readers
+go back and parse the sentence again. For example, when every active session
+has the same subject (the agent), start each title with a verb in the `-ing`
+form instead of mixing nouns and imperatives:
 
-#### Session titles
+Before: KV persistence across queries / Liquid 1.7B model integration /
+Fine-tune model on personal writing
 
-The original Claude session titles mix nouns, gerunds, and imperatives. Each
-active session has the same subject, the agent, so the rewrites omit the subject
-and start with a verb in the continuous form.
-
-| Group | As written | Rewritten |
-| --- | --- | --- |
-| Pinned | KV persistence across queries | Persisting KV across queries |
-| Today | vLLM performance on eviction queries | Measuring vLLM performance on eviction queries |
-| Today | Nemotron-3.5-Parse on OfficeQA benchmark | Running Nemotron-3.5-Parse on OfficeQA |
-| Yesterday | Liquid 1.7B model integration | Integrating Liquid 1.7B model |
-| Yesterday | Quail grant application strategy | Planning Quail grant application |
-| Yesterday | Fine-tune model on personal writing | Fine-tuning model on personal writing |
-| Oct 26 | Switching to main and fast-forwarding | Switching to main and fast-forwarding |
+After: Persisting KV across queries / Integrating Liquid 1.7B model /
+Fine-tuning model on personal writing
 
 ### Put the most important words first
 
 Find the words that distinguish each item from the others, and move them as
-close to the start as possible. Readers scanning web pages pay more attention
-to the start of each line,[^3] and readers scanning a list may see only the
-first two words of each item.[^4]
+close to the start as possible. Readers scanning a list often see only the
+first two words of each item:
 
-#### Order email subjects
+Before: Your order #1001 has been delivered / Your order #1001 has shipped /
+Your order #1001 is confirmed
 
-When every subject starts with "Your order", readers have to read further to
-find the status. Amazon puts the status first, so the opening word tells readers
-whether the order was placed, shipped, or delivered.
-
-| Date | Status last (Store) | Status first (Amazon.com) |
-| --- | --- | --- |
-| Oct 27 | Your order #1001 has been delivered | Delivered: "Bounty Essentials..." |
-| Oct 25 | Your order #1001 has shipped | Shipped: "Bounty Essentials..." |
-| Oct 24 | Your order #1002 has shipped | Shipped: "Desk lamp..." |
-| Oct 23 | Your order #1001 is confirmed | Ordered: "Bounty Essentials..." |
+After: Delivered: "Bounty Essentials..." / Shipped: "Bounty Essentials..." /
+Ordered: "Bounty Essentials..."
 
 ### Present sequences in order
 
@@ -273,71 +256,40 @@ the six acceptance tests pass.
 ### Use the same structure for comparable items
 
 Use one sentence structure for comparable items, so readers can follow the same
-pattern across them. In a study of sentences with two clauses joined by "and",
-readers read the second clause faster when it had the same structure as the
-first, e.g., when both clauses were active or both were passive.[^5]
+pattern across them. Don't start some items with a noun phrase ("The issue
+reports that..."), others with a different noun ("The page reports..."), and
+others with an action ("Pressing Ctrl+C..."):
 
-#### Issue summaries
+Before:
+- The issue reports that `ollama show` writes an unparseable Modelfile when a
+  value contains triple quotes.
+- The page reports an error reading GGUF metadata for a large MoE model.
+- Pressing Ctrl+C during multiline input leaves the REPL in multiline mode.
 
-Notion AI generated the summaries below from public Ollama issues.[^8] The
-summaries start inconsistently with "The issue reports that", "The page
-reports", or an action, "Pressing Ctrl +C". They also call the same thing an
-"issue" in some rows and a "page" in another, which breaks the
-[terminology rule](#use-consistent-terminology-and-constrain-your-vocabulary).
-The bold text marks each opening.
-
-| Issue | Summary | Annotation |
-| --- | --- | --- |
-| Claude Desktop Conversation: ~17K initial prefill, HTTP 500 retries, MLX cache loss (0.40.11–0.40.12) | **The issue reports that** Claude Desktop Conversation experiences a long (~70–90 s) initial prefill of ~17 K tokens, frequent HTTP 500 errors, and cache loss on MLX versions 0.40.11–0.40.12, despite later messages being faster. | |
-| ollama show --modelfile writes a Modelfile that ollama create rejects when a SYSTEM/TEMPLATE/LICENSE/MESSAGE value contains """ followed by whitespace | **The issue reports that** `ollama show --modelfile` incorrectly wraps values containing triple quotes followed by whitespace, causing unparseable Modelfiles that fail to recreate the model. | |
-| Error reading GGUF metadata on large MoE model with MXFP4 format | **The page reports** an error reading GGUF metadata for a large MoE model in MXFP4 format due to an oversized unsupported tensor, references a similar bug, and includes a link to the related GitHub issue. | Calls the issue a “page” |
-| ollama run: Ctrl+C during """ multiline input leaves session in multiline mode, so later input is swallowed or saved as the system message | **Pressing Ctrl +C** while entering a """ multiline message in ollama run clears the buffer but leaves the REPL in multiline mode, so the following input is mistakenly treated as a continuation or system message. | Starts with an action |
-
-#### News headlines
-
-The Perplexity Discover headlines below use a consistent opening, with the
-subject followed by an action or a planned action.[^9] For example, "Bank of
-Canada hikes rate to 2.5%" and "Brewers beat Rays in Game 5 for first World
-Series title" both identify the subject before stating what happened.
-
-| Headline | Summary | Sources |
-| --- | --- | --- |
-| Brewers beat Rays in Game 5 for first World Series title | Jacob Misiorowski blanked Tampa Bay over 5 2/3 innings as Milwaukee won 4-1, capping an 11-2 postseason run. | 59 |
-| Bank of Canada hikes rate to 2.5%, first since July 2023 | | 30 |
-| Weil Gotshal to wind down after partner exodus | | 31 |
-| HHS lets pharmacies make six unapproved peptides | | 15 |
+After:
+- `ollama show` writes an unparseable Modelfile when a value contains triple
+  quotes.
+- `ollama run` fails to read GGUF metadata for a large MoE model.
+- Pressing Ctrl+C during multiline input leaves the REPL in multiline mode.
 
 ### Use variation only to show a meaningful difference
 
 Vary length, structure, or wording only when the difference conveys a fact the
-reader needs. For comparable summaries, use the same components and show
-important differences explicitly, e.g., with review counts.
+reader needs. For comparable summaries, include the same kind of detail in each
+item instead of naming an app version in one item and review languages in
+another, so readers don't have to guess whether the difference is meaningful:
 
-The rule applies a principle from visualization design to text. A chart should
-express all the facts in its data, and only those facts.[^10] A difference in
-color or shape suggests a difference in meaning.[^11] In related text items,
-differences in length, structure, or detail can create similar expectations.
+Before:
+- **Bugs (9 reviews):** Reports include the app freezing and finished lessons
+  not counting, mostly on version 7.146.0.
+- **Energy limits (8 reviews):** Users say they run out of energy fast and must
+  wait or watch ads, including in Russian and Turkish reviews.
 
-#### User feedback themes
-
-Claude generated 11 themes from 100 Duolingo App Store reviews; five appear
-below.[^12] The original summaries include different kinds of detail. Only the
-bugs summary names an app version, 7.146.0, while only the energy summary names
-Russian and Turkish reviews. Readers cannot tell whether the differences are
-significant or whether other themes also involve the same version or languages.
-
-The rewritten summaries use short statements about what users say, with
-examples from the reviews. Review counts appear separately in a column. The
-original summaries remain alongside the rewrites so readers can compare the
-detail.
-
-| Theme | Claude's version | Rewritten version | Reviews per theme |
-| --- | --- | --- | --- |
-| Fun, easy, and effective learning | Most reviews praise Duolingo as fun, easy, and helpful for learning, often in short 5-star notes. Users cite new vocabulary, pronunciation help, self-paced lessons, and being able to talk with family or friends. Spanish is the most named language, followed by Japanese, Italian, Korean, German, and others. Several of these reviewers still raise a complaint, such as energy limits or cost. | Users love that the app is fun and helps them learn, e.g., new vocabulary and pronunciation. | 74 |
-| Chess, music, and math courses | Chess is a popular new draw, and some users mention music, piano, and math too. Feedback is mostly positive, but there are specific complaints: a checkmate rule that seems wrong, no way for skilled players to skip ahead, a distracting new owl voice and hard-to-see pieces in the chess puzzle, and many clicks between games. | Users enjoy the new courses but complain about problems, e.g., a checkmate rule that seems wrong. | 12 |
-| Bugs and technical problems | Reports include voice answers not registering, the app freezing (one user lost a streak), the app crashing on launch, finished lessons not counting, leaderboard members disappearing, a new event missing for one family-plan member, and a shared iPad starting a new learner at the wrong level. Most come from the current version, 7.146.0. | Users complain about bugs that cost them progress, e.g., a freeze that lost a daily streak. | 9 |
-| Energy and battery limits on lessons | The energy (battery) system, and the older hearts system, limits how much users can practice. Users say they run out fast, must wait or watch ads, and see it as a push to buy Super. Some reviews are in Russian and Turkish, so the complaint shows up across markets. One user suggests earning energy by doing chess, music, or math. | Users complain that they run out of energy fast and must wait to keep practicing. | 8 |
-| New language requests | Users ask for new courses. Two ask for Icelandic, noting that Duolingo already offers other Nordic languages, and one asks for Elvish from The Lord of the Rings. | Users request new courses, e.g., Icelandic. | 3 |
+After:
+- **Bugs (9 reviews):** Users complain about bugs that cost them progress,
+  e.g., a freeze that lost a daily streak.
+- **Energy limits (8 reviews):** Users complain that they run out of energy
+  fast and must wait to keep practicing.
 
 ## Punctuation and formatting
 
@@ -480,29 +432,3 @@ it can balloon if every item gets a sentence.
 
 After: The section can drift out of date, because it duplicates facts
 that live elsewhere. It can also balloon if every item gets a sentence.
-
-## Sources and notes
-
-[^1]: Thomas G. Bever. The Cognitive Basis for Linguistic Structures. In J. R. Hayes, editor, *Cognition and the Development of Language*, pages 279–362. Wiley, New York, 1970. Bever describes the strategy as reading a noun, a verb, and a noun as the actor, the action, and the object of the action.
-
-[^2]: Lyn Frazier and Keith Rayner. [Making and Correcting Errors During Sentence Comprehension: Eye Movements in the Analysis of Structurally Ambiguous Sentences](https://doi.org/10.1016/0010-0285(82)90008-1). *Cognitive Psychology*, 14(2):178–210, 1982. In an eye-tracking study, readers of sentences with a misleading start moved their eyes back to earlier words to parse the sentence again.
-
-[^3]: Jakob Nielsen. [F-Shaped Pattern for Reading Web Content (Original Study)](https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content-discovered/). Nielsen Norman Group, April 16, 2006. The study tracked the eyes of 232 users as they read thousands of web pages.
-
-[^4]: Jakob Nielsen. [First 2 Words: A Signal for the Scanning Eye](https://www.nngroup.com/articles/first-2-words-a-signal-for-scanning/). Nielsen Norman Group, April 6, 2009.
-
-[^5]: Lyn Frazier, Lori Taft, Tom Roeper, Charles Clifton, and Kate Ehrlich. [Parallel Structure: A Source of Facilitation in Sentence Comprehension](https://link.springer.com/article/10.3758/BF03198303). *Memory & Cognition*, 12(5):421–430, 1984. In 2010, Sturt, Keller, and Dubey found that readers also read a phrase faster when it has the same structure as an earlier phrase, even when "and" does not join the two phrases: Patrick Sturt, Frank Keller, and Amit Dubey. [Syntactic Priming in Comprehension: Parallelism Effects with and without Coordination](https://doi.org/10.1016/j.jml.2010.01.001). *Journal of Memory and Language*, 62(4):333–351, 2010.
-
-[^7]: E.g., a core rule of [ASD Simplified Technical English](https://www.asd-ste100.org/about.html), a writing standard for aircraft maintenance manuals, is "one word, one meaning." Also, Jakob Nielsen's fourth usability heuristic says that users "should not have to wonder whether different words, situations, or actions mean the same thing." See Jakob Nielsen. [10 Usability Heuristics for User Interface Design](https://www.nngroup.com/articles/ten-usability-heuristics/). Nielsen Norman Group, 1994.
-
-[^8]: Shreya Shankar copied 10 open issues from [ollama/ollama](https://github.com/ollama/ollama/issues) on October 28, 2026, and added a Notion AI autofill property named "Summary" with its default settings. The [issue summaries](#issue-summaries) table preserves the summaries of issues [#19359](https://github.com/ollama/ollama/issues/19359), [#19342](https://github.com/ollama/ollama/issues/19342), [#19375](https://github.com/ollama/ollama/issues/19375), and [#19340](https://github.com/ollama/ollama/issues/19340).
-
-[^9]: [Perplexity Discover](https://www.perplexity.ai/discover), accessed October 28, 2026.
-
-[^10]: Jock Mackinlay. [Automating the Design of Graphical Presentations of Relational Information](https://doi.org/10.1145/22949.22950). *ACM Transactions on Graphics*, 5(2):110–141, 1986.
-
-[^11]: Jeff Heer. [CSE 512: Data Visualization](https://courses.cs.washington.edu/courses/cse512/24sp/). University of Washington, Spring 2024. See the lectures on data and image models and on visualization design.
-
-[^12]: Shreya Shankar downloaded the 100 most recent US App Store reviews of Duolingo from Apple's public review feed on October 28, 2026; the reviews are from October 26 and 27, 2026. Claude ran the `data:analyze` skill of Claude's data analysis plugin on them and wrote 11 theme cards. The [user feedback themes](#user-feedback-themes) table preserves five of the original summaries and Shankar's rewrites.
-
-[^13]: Shankar cites related work by Kousta, Vinson, and Vigliocco, while noting that the work was suggested by Claude and had not been read closely for the article. The study found that people recognize emotion words, positive or negative, faster than neutral words. See Stavroula-Thaleia Kousta, David P. Vinson, and Gabriella Vigliocco. [Emotion Words, Regardless of Polarity, Have a Processing Advantage over Neutral Words](https://doi.org/10.1016/j.cognition.2009.06.007). *Cognition*, 112(3):473–481, 2009.
