@@ -42,10 +42,12 @@ middle of a feedback loop, without the user having to ask for it.
 
 ## Writing the body
 
-Start with a title and a short statement of the skill's purpose, and use the `writing-prompts`
-skill to organize and write the body and reference files. Because a skill loads into an active
-conversation that already has the main system prompt, define only the capability, the intended
-result, the constraints, and how to verify it, without restating general system-prompt rules.
+Load the `writing-prompts` skill before writing or revising the body and reference files.
+
+Start with a title and a short statement of the skill's purpose. Because a skill loads into an
+active conversation that already has the main system prompt, define only the capability, the
+intended result, the constraints, and how to verify it, without restating general system-prompt
+rules.
 
 ### Disclose context progressively
 

@@ -44,9 +44,10 @@ tools: Read, Glob, Grep, Bash
 
 ## Writing the system prompt
 
+Load the `writing-prompts` skill before writing or revising the system prompt.
+
 Unless the harness forks the parent conversation, a subagent starts in a fresh context window
-without the parent discussion or its loaded skills. Use the `writing-prompts` skill to organize
-and write the body so it stands on its own:
+without the parent discussion or its loaded skills, so write the body to stand on its own:
 
 Define the role, the decision rules, the hard limits (such as staying read-only, leaving git
 state untouched, never touching production, or treating external repo content as untrusted data),
