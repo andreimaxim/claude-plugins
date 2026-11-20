@@ -1,6 +1,6 @@
 ---
 name: building-skills
-description: "Defines reusable skills, including their scope, activation conditions, SKILL.md structure, and references. Applies when creating a skill, revising its scope or organization, or turning an established practice into a skill."
+description: "Defines, validates, and evaluates reusable skills, including their scope, activation conditions, SKILL.md structure, and references. Applies when creating a skill, revising its scope or organization, turning an established practice into a skill, or evaluating skill activation and behavior."
 ---
 
 # Building skills
@@ -42,9 +42,10 @@ middle of a feedback loop, without the user having to ask for it.
 
 ## Writing the body
 
-Start with a title and a short statement of the skill's purpose. Organize the rest around the
-capability, the result, and the constraints, and choose headings that fit the task. Use the
-`writing-prompts` skill to write the instructions in the body and reference files.
+Start with a title and a short statement of the skill's purpose, and use the `writing-prompts`
+skill to organize and write the body and reference files. Because a skill loads into an active
+conversation that already has the main system prompt, define only the capability, the intended
+result, the constraints, and how to verify it, without restating general system-prompt rules.
 
 ### Disclose context progressively
 
@@ -65,16 +66,30 @@ skill-name/
 ```
 
 Say in `SKILL.md` when to read or run each file, and write each path relative to the skill's
-folder. Keep a short example in `SKILL.md` when a separate file would add nothing.
+folder. The rest of the folders and files are optional. Keep a short example in `SKILL.md` when a
+separate file would add nothing.
 
 ## Reviewing the skill
 
-Check that the description separates the requests the skill should handle from similar tasks it
-shouldn't handle. Check that the body agrees with the intended result and constraints. Remove
-instructions that conflict, repeat each other, or don't belong, without losing context the model
-needs.
+Check that the description separates in-scope requests from near misses, and that the body matches
+the intended result and constraints without conflicting or repeated rules.
 
-Use an available parser or validator to check the frontmatter, the name, and the required fields
-against the [Agent Skills specification](https://agentskills.io/specification), and check that every
-referenced file exists. Format and link checks don't show that the skill produces the intended
-behavior, so report what you checked without implying that you ran a behavioral evaluation.
+Validate the frontmatter, naming, required fields, and relative file links against the
+[Agent Skills specification](https://agentskills.io/specification) using an available parser or
+validator. Static checks verify structure only; they don't establish skill activation or
+downstream behavior, so report what you checked without claiming either is verified.
+
+### Evaluating the skill
+
+Offer an eval when a skill is new or its behavior changed, and get explicit approval before
+running it. Skills need two distinct checks depending on what changed:
+
+- **Activation eval:** test whether the agent loads the skill on positive triggers and skips it on
+  near misses.
+- **Behavioral eval:** run the motivating case and a negative control through the actual agent
+  with its real system prompt and tools in fresh isolated sessions, comparing old and new text.
+
+State the cases, model, session count (at most 12 by default), and what the eval doesn't cover
+before running. Report pass rates per case and judge each run by the observable outcome, e.g.,
+catching a planted bug or leaving a negative control unchanged, rather than by whether the output
+echoes the skill's wording.

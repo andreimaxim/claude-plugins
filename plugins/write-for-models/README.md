@@ -4,8 +4,9 @@ The write-for-models plugin helps Claude Code write and revise instructions that
 
 ## Skills
 
-- `building-skills` decides a skill's scope, when it loads, and how its `SKILL.md`, `reference/`, `scripts/`, and `assets/` files are organized.
-- `writing-prompts` writes and revises skill bodies, subagent system prompts, and subagent briefs, and offers an eval for each change.
+- `building-skills` defines, validates, and evaluates reusable skills, including their scope, activation conditions, layout, and references.
+- `building-agents` defines, validates, and evaluates reusable subagents, including their role, frontmatter, tool boundaries, and caller briefs.
+- `writing-prompts` writes and revises instructions for an agent across skill bodies, subagent prompts, and briefs.
 
 ## Install
 
@@ -26,7 +27,7 @@ For a repository-specific request, open that repository and identify the file or
 
 The plugin contains Markdown instructions. It includes no hooks, executable scripts, MCP servers, package dependencies, or background services.
 
-Claude can read and edit the instruction files relevant to your request. The building skill uses available parsers or validators to check skill frontmatter and references, and may consult the linked Agent Skills specification at `https://agentskills.io/specification`. The writing skill offers a behavioral evaluation plan, but requires explicit approval before running an evaluation through an agent or model. An approved evaluation uses the provider and tools you choose and can incur their normal charges.
+Claude can read and edit the instruction files relevant to your request. `building-skills` and `building-agents` use available parsers or validators to check frontmatter and references (including the Agent Skills specification at `https://agentskills.io/specification`), and offer activation or behavioral evaluation plans that require explicit approval before running through an agent or model. An approved evaluation uses the provider and tools you choose and can incur their normal charges.
 
 Claude Code's permissions and your project settings still apply to file edits and tool calls.
 

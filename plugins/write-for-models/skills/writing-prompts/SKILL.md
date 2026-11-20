@@ -14,45 +14,19 @@ An instruction is judged by the behavior it produces. A good instruction produce
 behavior reliably across all the situations it covers, and it uses only the text that result needs.
 When clarity for the model conflicts with another writing choice, choose clarity.
 
-## Skills, subagent system prompts, and briefs
-
-What an instruction needs depends on where it runs and what context the receiving agent already has.
-
-### Skill bodies
-
-A skill loads into an active conversation when the task matches its description (see the
-`building-skills` skill for how skill folders, frontmatter, and reference files are organized).
-Because the agent already has the conversation and its main system prompt, the skill body only
-needs to define the capability, the intended result, the constraints, and how to verify it, without
-restating general system-prompt rules.
-
-### Subagent system prompts
-
-A subagent starts in a fresh context window and doesn't inherit the main conversation or its loaded
-skills. Its system prompt (`agents/*.md`) sets the role, the rules for making decisions, and the
-limits (such as staying read-only, not creating commits, or when to stop and return early), along
-with the structure of the report it returns to the caller.
-
-### Subagent briefs
-
-When you invoke a subagent, it hasn't seen the conversation that led to the call. Include in the
-brief:
-
-- The goal, the boundaries of the task, and what is already settled.
-- The files or evidence to start from, without stating your conclusion when you want an independent
-  judgment.
-- How to verify completion, and the specific facts, citations, or outputs you need back, because a
-  summary may omit them.
-
 ## Writing the instruction
 
 Put the sections in the order the model needs them, grouping related rules under one heading and
-putting text that stays the same before text that changes with each request:
+putting text that stays the same before text that changes with each request. This order arranges
+the text rather than prescribing the order in which the agent works:
 
 - What the capability or rule is, and when it applies.
 - The result to produce and the constraints it must meet.
 - How to verify the result, and what good looks like.
 - Examples, when they clarify an important distinction.
+
+Write instructions in prose paragraphs, and reserve bullet lists for true enumerations, because
+models over-index on bold-labeled bullet lists and mirror them as rigid checklists.
 
 ### Describe the result instead of the steps
 
@@ -131,13 +105,3 @@ the existing instructions that cover the situation, look for text you can remove
 and write the smallest change that produces the intended behavior across those cases. Check that
 the change is clear, covers a general behavior, states each rule in one place without
 contradictions, and uses the strength you intend.
-
-Offer an eval, and don't run it without explicit approval. State in the eval plan:
-
-- The case that prompted the change, and one negative control that the change must not affect.
-- The model and the number of isolated sessions to run (at most 12 by default).
-- What the eval doesn't cover.
-
-Run the eval through the actual agent with its actual system prompt and tools, in fresh isolated
-sessions, and report the pass rate for each case with the old and the new text. "Reads better"
-isn't a result.
