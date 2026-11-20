@@ -14,7 +14,10 @@ Write text people can understand in one pass, from standalone messages to whole
 websites and documents.
 
 Preserve facts and qualifications, including uncertainty and attribution. Leave
-code, identifiers, and exact quotations unchanged.
+code, identifiers, and exact quotations unchanged. When revising existing text,
+compare the draft against the source so every fact, number, qualification, and
+attribution keeps its original strength, rather than letting a style fix turn
+"not established" into "not".
 
 ## Word choice and tone
 
@@ -29,11 +32,10 @@ After: We use the cache to make repeated queries faster.
 
 ### No jargon
 
-Always use human-understandable language, the way two people talk to each other.
-Don't invent jargon or shorthand (that is, if a word or phrase is not in the
-Merriam Webster dictionary, don't use it). Use established technical terms only
-when they are most precise, and briefly define them when readers may not know
-them.
+Use everyday language, the way two people talk to each other, instead of invented
+jargon or shorthand. Use an established technical term only when it is more
+precise than an everyday word, and briefly define it when readers may not know
+it.
 
 Before: The score is a calibrated proxy for whether the property holds.
 
@@ -148,8 +150,7 @@ first two words of each item:
 Before: Your order #1001 has been delivered / Your order #1001 has shipped /
 Your order #1001 is confirmed
 
-After: Delivered: "Bounty Essentials..." / Shipped: "Bounty Essentials..." /
-Ordered: "Bounty Essentials..."
+After: Delivered: order #1001 / Shipped: order #1001 / Confirmed: order #1001
 
 ### Present sequences in order
 
@@ -182,14 +183,13 @@ output, so a repeated render does no work.
 
 ### Limit clauses and repeated examples
 
-Never write three or more clauses in one sentence, or three or more example
-sentences in a row. In ordinary prose, a sentence may have one or two related
-clauses. Do not pack three or more clauses into one prose sentence. If you need
-that many points, use a numbered First / Second / Third sequence as described
-under [Present sequences in order](#present-sequences-in-order), or short bullet
-points when you are writing a brief. If list points are examples and you want
-to inline them, introduce with "e.g.". Also do not give three or more example
-sentences back to back to support the same point.
+In ordinary prose, a sentence may have one or two related clauses. Do not pack
+three or more clauses into one prose sentence. If you need that many points,
+use a numbered First / Second / Third sequence as described under [Present
+sequences in order](#present-sequences-in-order), or short bullet points when
+you are writing a brief. If list points are examples and you want to inline
+them, introduce with "e.g.". Also do not give three or more example sentences
+back to back to support the same point.
 
 Before: The parser reads the file, the validator checks the fields, and the
 writer saves the record.
@@ -269,7 +269,7 @@ Before:
 After:
 - `ollama show` writes an unparseable Modelfile when a value contains triple
   quotes.
-- `ollama run` fails to read GGUF metadata for a large MoE model.
+- Reading GGUF metadata for a large MoE model returns an error.
 - Pressing Ctrl+C during multiline input leaves the REPL in multiline mode.
 
 ### Use variation only to show a meaningful difference
@@ -286,10 +286,10 @@ Before:
   wait or watch ads, including in Russian and Turkish reviews.
 
 After:
-- **Bugs (9 reviews):** Users complain about bugs that cost them progress,
-  e.g., a freeze that lost a daily streak.
+- **Bugs (9 reviews):** Users complain about the app freezing and finished
+  lessons not counting.
 - **Energy limits (8 reviews):** Users complain that they run out of energy
-  fast and must wait to keep practicing.
+  fast and must wait or watch ads.
 
 ## Punctuation and formatting
 

@@ -70,7 +70,10 @@ current name, renaming the thing, replacing a pointless wrapper with an existing
 resolving a modeling conflict first. Give one recommended name with the evidence from the code and
 callers, and offer alternatives only when they reflect an open question about meaning.
 
-When asked to carry out a rename, trace all references across the code and external contracts, such
-as serialized fields, database schemas, routes, and documentation, preserve required compatibility,
-and run the repository's checks. Keep a behavior-preserving rename separate from changes to
-behavior or data migrations.
+A request for naming advice doesn't authorize editing code. When asked to carry out a rename,
+trace all references across code and external contracts (serialized fields, database schemas,
+routes, configuration, and documentation), preserve required compatibility, and run the
+repository's checks. Passing checks don't catch string-based references or external consumers, so
+search for the old name before finishing and list any external contract kept for compatibility or
+not verified. Keep a behavior-preserving rename separate from changes to behavior or data
+migrations.

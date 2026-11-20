@@ -37,6 +37,9 @@ trace using the tools of the environment where the explanation will be read:
 - **CLI terminals with plain-text output only:** Use indented call traces, state flows, or Unicode
   box drawings in a `text` code block.
 
+For other destinations, use the richest diagram form that renders there, falling back to a text
+trace only when nothing richer renders.
+
 ## Constraints and verification
 
 Write impersonally about the system and the change, without first-person narration of what you
@@ -44,6 +47,10 @@ checked or didn't run. Base every claim about behavior on the code, contracts, a
 every claim about why the code was written that way on the commits, pull requests, or tickets that
 introduced it rather than a later rename or refactor. When the historical record doesn't state why
 a choice was made, describe what the code does without speculating about the author's intent.
+
+Before presenting the account, test it against the code most likely to contradict it, such as
+another caller, an error or retry path, or an unchanged path sharing the edited code, and fix any
+claim that doesn't hold.
 
 Explain the system or change as it is. When the user also asks for an evaluation or critique, keep
 the factual walkthrough separate from your recommendations.
