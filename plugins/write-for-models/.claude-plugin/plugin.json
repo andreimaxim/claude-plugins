@@ -1,6 +1,6 @@
 {
   "name": "write-for-models",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Write and revise skills, system prompts, and other model instructions",
   "icon": "./skills/writing-prompts/assets/icon.png",
   "author": {

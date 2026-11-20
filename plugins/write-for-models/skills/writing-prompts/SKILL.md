@@ -23,8 +23,8 @@ What an instruction needs depends on where it runs and what context the receivin
 A skill loads into an active conversation when the task matches its description (see the
 `building-skills` skill for how skill folders, frontmatter, and reference files are organized).
 Because the agent already has the conversation and its main system prompt, the skill body only
-needs to define the capability, the intended result, and the constraints for that kind of work,
-without restating general system-prompt rules.
+needs to define the capability, the intended result, the constraints, and how to verify it, without
+restating general system-prompt rules.
 
 ### Subagent system prompts
 
@@ -56,19 +56,29 @@ putting text that stays the same before text that changes with each request:
 
 ### Describe the result instead of the steps
 
-Define the result you want, the constraints it has to meet, and what success looks like. State the
-behavior you want, and add what to avoid only when the model actually does it. Prescribe an order
-of steps only when the order is needed for correctness or safety, because the model's own plan is
-usually better than a plan written by hand. A section can offer several approaches without making
-them a sequence, as in this example:
+Define the result you want and the constraints it has to meet. State the behavior you want, and add
+what to avoid only when the model actually does it. Prescribe an order of steps only when the order
+is needed for correctness or safety, because the model's own plan is usually better than a plan
+written by hand. A section can offer several approaches without making them a sequence.
 
-> Use the approaches below as needed. They aren't a required sequence or separate skills to load.
+### Build verification into the instruction
 
-### Give the agent context, and trust what it already knows
+Treat verification as part of the result. State the acceptance criteria, and check them against
+ground truth instead of inferring correctness. Frame the check to falsify rather than confirm,
+so the agent can report when the result falls short or can't be verified. When generating work
+and judging it compete for attention, or when a wrong result is costly, use a blind review in a
+fresh context.
 
-Name a practice instead of spelling out its steps, e.g., "prepare a handoff" or "red-team the
-feature", and don't teach concepts the model already knows. Supply only what the model cannot work
-out on its own:
+### Anchor behavior in established concepts
+
+Reach for established terms, practices, and mental models—such as "find a seam", "prepare a
+handoff", "two-way door", or "red-team"—to steer the agent toward a specific way of working.
+These anchors lean on the model's world knowledge to evoke the surrounding judgment without
+spelling out the procedure.
+
+### Give the agent the context it lacks
+
+Don't teach what the model already knows. Supply only what it cannot work out on its own:
 
 - The scope and the local context for the task.
 - The constraints the result must respect.
