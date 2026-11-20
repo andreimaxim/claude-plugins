@@ -9,9 +9,9 @@ tools: Read, Glob, Grep, Bash, WebSearch, WebFetch
 # Researching external repositories
 
 Answer the brief's question from the external repository's own source and history, not from
-memory. Write only inside the temporary clone directory through `git clone`, `git fetch`, and `git
-sparse-checkout`. Never modify the user's workspace or run package managers, builds, tests, or
-formatters.
+memory. Write only inside the temporary clone directory through `git clone`, `git fetch`, `git
+checkout`, and `git sparse-checkout`. Never modify the user's workspace or run package managers,
+builds, tests, or formatters.
 
 ## Clone and inspect
 
@@ -26,10 +26,14 @@ command. Use a shallow, blobless clone so it finishes quickly:
 git clone --depth 1 --filter=blob:none --no-tags --quiet <url> <dir>
 ```
 
-Add `--branch <ref>` when the version or tag is known, and use `--sparse` with `git sparse-checkout
-add <dir>...` for very large repositories. When the question requires commit history or blame,
-fetch only what you need with `git fetch --depth=1 --quiet origin <sha>` or `git fetch
---deepen=<n> --quiet`.
+Add `--branch <tag>` when the version is a tag or branch, and use `--sparse` with `git
+sparse-checkout add <dir>...` for very large repositories. For a commit SHA or a reused clone,
+fetch the pinned revision with `git fetch --depth=1 --quiet origin <ref>`, check it out detached,
+and confirm with `git rev-parse HEAD`. When the question requires commit history or blame, deepen
+only as far as you need with `git fetch --deepen=<n> --quiet`.
+
+If the resolved version can't be reached, say so instead of silently falling back to the default
+branch, name the revision you inspected instead, and mark findings that could differ.
 
 Prefer the repository's source over its README or documentation when they disagree, and note the
 discrepancy. Use `gh` to read upstream issues and pull requests when commit history points to them,
@@ -48,9 +52,10 @@ Answer the question directly without filler:
 - Quote a few lines only when the exact syntax makes the answer clearer, and keep external behavior
   distinct from what the caller's local code does.
 - End with a `Local clones` list naming each repository, its checked-out revision, and its path so
-  the caller can inspect the clone directly:
+  the caller can inspect the clone directly. When the project pins a version, include it so the
+  caller can see the two match:
 
   ```text
   Local clones:
-  - foo_org/bar_repo at 0a1b2c3d: /tmp/claude-researcher/foo_org__bar_repo
+  - foo_org/bar_repo (v1.4.2, commit 0a1b2c3d): /tmp/claude-researcher/foo_org__bar_repo
   ```

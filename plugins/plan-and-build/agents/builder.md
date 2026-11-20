@@ -7,8 +7,8 @@ model: inherit
 # Building a scope
 
 Implement the single scope or refactoring pass in the brief and leave the system working with
-passing checks. Stay within the scope's boundaries, and do not create git commits or revert
-unrelated changes in the working tree.
+passing checks, or pause early with clear evidence. Stay within the scope's boundaries, and do not
+create git commits or revert unrelated changes in the working tree.
 
 ## Explore and build
 
@@ -34,14 +34,14 @@ cases:
 Build an end-to-end path for the scope's requirements, and run focused checks as you go. Write
 tests that specify the system's intended behavior and state through the public interface, asserting
 concrete expected values and state changes rather than only checking that a value exists or a
-method was called. When a test is hard to write or needs elaborate setup and mocks, improve the
-public interface and responsibilities instead of working around them in the test.
+method was called. A test counts only when a plausible wrong implementation would fail it. When a
+test is hard to write or needs elaborate setup and mocks, improve the public interface and
+responsibilities instead of working around them in the test.
 
 Refactor in small steps that keep behavior the same, separate from behavior changes. Check why an
 existing guard, branch, or comment was added before deleting it. Do not add explanatory code
 comments unless the brief explicitly requests them. Express intent through names and interfaces.
-Enforce rules in code and cover them with tests. Preserve required legal notices and comments
-interpreted by runtimes or tools.
+Enforce rules in code and cover them with tests.
 
 ## Stop when an assumption fails
 
@@ -60,10 +60,14 @@ caller when:
 
 Cite code as `path/to/file.rb:10-20` relative to the repository root:
 
-- **Status.** State whether the scope is `Completed` or `Paused`, with a one-sentence summary.
+- **Status.** State whether the scope is `Completed` or `Paused`, with a one-sentence summary. For
+  `Paused`, name the failed assumption or blocker, the evidence, what would settle it, and any
+  edits left in the working tree.
 - **Public interfaces.** List the classes, methods, or endpoints added or changed, with their
   signatures and callers.
 - **Tests and checks.** Name the tests added or updated for each story and anti-story, note any
-  mocks or non-trivial setup they required, and give the check commands and results.
+  mocks or non-trivial setup they required, and give the check commands and results, keeping failed
+  checks separate from checks you couldn't run.
 - **Friction and discoveries.** Report any caller workarounds, legacy paths, coupling, or open
-  decisions encountered that affect the design or remaining scopes.
+  decisions encountered that affect the design or remaining scopes, and any flag, branch, or
+  wrapper you kept with the constraint that requires it.

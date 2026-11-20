@@ -6,10 +6,10 @@ description: Proves that a change works end to end and breaks nothing by running
 # Proving changes
 
 Proving changes produces evidence that convinces a skeptical reviewer that a change does what was
-claimed and breaks nothing, without the reviewer having to read the code. Every claim needs an
-observation from a run that would have come out differently if the claim were false. Unit tests,
-type checks, and linters catch local mistakes, but they aren't end-to-end proof. Report them as
-checks, and don't call a change verified end to end on their results alone.
+claimed and leaves neighboring behavior intact, without the reviewer having to read the code. Every
+claim needs an observation from a run that would have come out differently if the claim were false.
+Unit tests, type checks, and linters catch local mistakes, but they aren't end-to-end proof. Report
+them as checks, and don't call a change verified end to end on their results alone.
 
 ## Choose the cases and the level
 
@@ -25,7 +25,8 @@ claim:
   adjacent features that share the edited code.
 - **Operational checks.** When the change could affect them, check resource cleanup and behavior
   after a restart, reload, or reconnect. For a performance claim, ask the `profiler` subagent to
-  measure before and after.
+  measure before and after, passing the claim, the revisions to compare, the command or path to
+  measure, and the shared settings and data.
 
 Drive the change as close to how a user or caller reaches it as the environment and the user's
 authorization allow, e.g., through the deployed or staging interface, the full local stack, or the
@@ -57,7 +58,8 @@ language model, run each case multiple times on both sides and report pass rates
 
 ## Collect and check the evidence
 
-Gather more than one kind of evidence for each claim, so each observation checks the others:
+Back each claim with an independent ground-truth observation so a misleading capture can't stand
+on its own:
 
 - **Visuals and state.** Capture screenshots of each state, or a recording with a moving pointer
   that also crosses neighboring controls when interaction or motion is part of the change. Back
@@ -72,9 +74,10 @@ run, or a capture taken mid-transition. Note any discarded run in your report. T
 application errors and unexplained differences between runs as findings rather than discarding
 them.
 
-Before finishing, read the whole diff and account for every removed line, changed comment, touched
-shared file, and configuration edit. Delete any temporary test data, accounts, sandboxes, or
-staging rows that the proof created.
+Before finishing, check the diff for changes your cases didn't exercise (such as a removed path,
+touched shared file, or configuration edit)—add a case or name them as unproven—and confirm no
+temporary proof edits remain. Delete any temporary test data, accounts, sandboxes, or staging rows
+that the proof created.
 
 ## Report the proof
 

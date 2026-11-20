@@ -1,6 +1,6 @@
 {
   "name": "plan-and-build",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Shape a raw idea into a bounded plan, then implement it",
   "icon": "./skills/shaping/assets/icon.png",
   "author": {

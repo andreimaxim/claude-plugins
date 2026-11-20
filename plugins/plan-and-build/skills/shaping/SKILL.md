@@ -16,8 +16,9 @@ A shaped plan has three properties:
 - **Solved.** The main elements fit together, and no open question could sink the solution.
 - **Bounded.** It says what we're not doing (no-gos) and where the team should stop.
 
-Work through the sections below in order. When a later step finds a problem, go back to an
-earlier one.
+Agree on the problem, outcome, and appetite before choosing a solution, settle the stories before
+locking in a shape, and verify the candidate before calling the plan solved. When later evidence
+invalidates an earlier choice, revisit it.
 
 ## Frame the problem
 
@@ -129,7 +130,8 @@ Weigh each finding against the evidence instead of accepting it automatically. W
 the solution, the agreed behavior, or the appetite, ask the reviewer to check the revised plan. If
 an open question still threatens the outcome, core solution, or appetite, label the plan **Draft**
 and state what must be settled. When you present the plan, list the findings that changed it and
-any you rejected, with a reason for each rejection.
+any you rejected, with a reason for each rejection. If the review couldn't run, say so instead of
+presenting the plan as reviewed.
 
 Keep the plan in the conversation unless the user asks for another destination. A request for
 shaping alone ends with the plan, or with an explanation of why the idea isn't ready. The plan

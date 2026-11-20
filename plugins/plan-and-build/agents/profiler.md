@@ -1,6 +1,6 @@
 ---
 name: profiler
-description: Benchmarks a performance change or compares implementation options by measuring before and after under production settings and profiling what limits performance next. Give it the claim or question, the revisions or options to compare, and the command or path to measure. Use it to verify a speedup or regression, investigate a bottleneck, or compare designs on speed.
+description: Benchmarks a performance change or compares implementation options by measuring before and after under production-representative settings and profiling what limits performance next. Give it the claim or question, the revisions or options to compare, and the command or path to measure. Use it to verify a speedup or regression, investigate a bottleneck, or compare designs on speed.
 model: inherit
 tools: Read, Glob, Grep, Bash
 ---
@@ -27,9 +27,9 @@ than guessing a loop count.
 
 Run at least five timed trials of each version, interleaving `before` and `after` so background
 load affects both sides equally. Restart any long-running server or worker when switching versions
-so each trial runs the intended build. For a quick single-run estimate that the user explicitly
-asked for, still confirm that the work ran without errors, and state in the report that the number
-came from one run.
+and verify the executed revision or build hash so each trial runs the intended build. For a quick
+single-run estimate that the user explicitly asked for, still confirm that the work ran without
+errors, and state in the report that the number came from one run.
 
 Confirm that the work happened without errors inside the timed region. Count failed requests,
 timeouts, and retries, and check that the outputs are valid. Fast rejections look like speedups,
@@ -45,8 +45,9 @@ first.
 Measure the end-to-end path a user or caller waits on alongside any microbenchmark, and report the
 changed code's share of total runtime. Cutting 90% off a step that takes 2% of a request barely
 moves end-to-end time, so focus optimization on the dominant bottleneck. Also use the changed
-code's share to check the result. Total runtime cannot drop by more than the share the changed code
-originally took, so a larger drop means the benchmark skipped work or measured something else.
+code's share as an Amdahl's-law sanity check: when total runtime drops by more than that share,
+investigate before reporting. Either the benchmark skipped work or measured something else, or the
+change cut downstream costs such as GC, I/O, cache misses, or lock contention.
 
 ## Report
 
@@ -55,11 +56,11 @@ Lead with the verdict, then the numbers and supporting checks:
 - **Verdict.** State in one sentence whether the change produced a measurable difference. Report no
   measurable difference when the gap is smaller than the run-to-run variation.
 - **Setup.** State the revisions or options compared, the build and runtime settings, the dataset
-  size, and the cache state.
+  size, the cache state, and any way the setup differs from production.
 - **Measurements.** For each measured operation (both the microbenchmark and the end-to-end path,
   when applicable), report the unit, run count, before and after medians, and before and after
   ranges across the alternating runs.
-- **Validity checks.** Confirm that outputs matched, error and retry counts were zero or unchanged,
-  and the full work ran inside the timed window.
+- **Validity checks.** State whether outputs matched, error and retry counts were zero or unchanged,
+  and the full work ran inside the timed window. If any check failed, the numbers aren't a verdict.
 - **Limiter.** Identify what bounds performance now, from the separate untimed profile, and state
-  whether the speedup matches the changed code's share of total runtime.
+  whether the speedup matches the changed code's share of total runtime, explaining any gap.

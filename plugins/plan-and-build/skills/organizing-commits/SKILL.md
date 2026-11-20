@@ -16,12 +16,14 @@ conventions, and keep each commit's author and trailers such as Co-Authored-By.
 
 Each commit must leave the code working, so it builds and passes the repository's relevant checks
 on its own. If splitting a change would leave a commit broken, combine or reorder the changes
-instead. Run the checks on every new commit, and report any commit you could not check.
+instead. Run the checks on every new commit, and report any commit you could not check as
+unverified rather than working.
 
-Before rewriting, save the starting state, including uncommitted changes, under a backup ref. When
-you finish, confirm that the final tree matches the saved state exactly. If it doesn't, fix the
-commits or restore the backup.
+Before rewriting, save the starting state, including the uncommitted changes you plan to commit,
+under a backup ref. When you finish, confirm that the final tree matches the saved state exactly
+and that any excluded untracked files remain untouched. If either check fails, fix the commits or
+restore the backup.
 
 Leave pushing to the user. Report the new commits, the backup ref, the check results for each
-commit, and the result of the tree check. If the branch was already pushed, say that publishing it
-needs a force push.
+commit, and the result of the tree check. If the branch was already pushed, say that updating the
+remote branch needs a force push.
